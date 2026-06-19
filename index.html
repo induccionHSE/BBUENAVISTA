@@ -3,871 +3,1295 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Inducción HSEQ – Bloque Buenavista</title>
+  <title>Inducción HSEQ – Bloque Buenavista · Omega Energy</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
+  /* ═══════════════════════════════════════════════════════════
+     SISTEMA DE DISEÑO — OMEGA ENERGY HSEQ INDUCCIÓN v4
+     Proyecto: Bloque Buenavista · Exploración y Producción
+     Paleta teal corporativa OEC. Contenido intacto.
+  ═══════════════════════════════════════════════════════════ */
+
   :root {
-    --azul-principal: #00556b;
-    --azul-hover: #003d4f;
-    --azul-enlace: #007088;
-    --gris-fondo: #f3f6f7;
-    --gris-detalle: #d8dee1;
-    --blanco: #ffffff;
+    --teal-oscuro:    #003d4f;
+    --teal-medio:     #00556b;
+    --teal-claro:     #0088a8;
+    --teal-bright:    #1aa3c4;
+    --naranja:        #f97316;
+    --naranja-bright: #fb923c;
+    --verde:          #16a34a;
+    --verde-bright:   #22c55e;
+    --rojo:           #dc2626;
+    --blanco:         #ffffff;
+
+    --fondo:          #eef4f5;
+    --fondo-warm:     #fafaf8;
+    --surface-1:      #ffffff;
+    --surface-2:      #f4f8f9;
+    --surface-3:      #e9f1f3;
+
+    --texto:          #0a2730;
+    --texto-2:        #2d4954;
+    --texto-secondary:#557079;
+    --texto-muted:    #8aa1a8;
+
+    --borde:          #d4e0e3;
+    --borde-fuerte:   #bcccd0;
+
+    --shadow-xs: 0 1px 2px rgba(10,39,48,0.04);
+    --shadow-sm: 0 1px 4px rgba(10,39,48,0.06), 0 1px 2px rgba(10,39,48,0.04);
+    --shadow-md: 0 3px 8px rgba(10,39,48,0.08), 0 1px 3px rgba(10,39,48,0.05);
+    --shadow-lg: 0 8px 20px rgba(10,39,48,0.09), 0 2px 6px rgba(10,39,48,0.05);
+    --shadow-xl: 0 16px 32px rgba(10,39,48,0.10), 0 4px 10px rgba(10,39,48,0.06);
+
+    --radio:    6px;
+    --radio-lg: 10px;
+    --radio-xl: 14px;
+
+    --header-h:   62px;
+    --progress-h: 3px;
+    --max-w:      900px;
+    --pad-x:      48px;
+    --pad-y:      44px;
+
+    --font-display: 'Inter', 'IBM Plex Sans', sans-serif;
+    --font-body:    'IBM Plex Sans', 'Inter', sans-serif;
+
+    --t-fast:   0.15s ease;
+    --t-med:    0.22s ease;
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
 
   body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    background-color: var(--gris-fondo);
-    margin: 0;
-    padding: 0;
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.72;
+    background-color: var(--fondo);
+    color: var(--texto);
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: 0.01em;
   }
 
+  /* ═══ HEADER ═══ */
   header {
-    background-color: var(--azul-principal);
+    background: var(--teal-oscuro);
     color: var(--blanco);
-    padding: 10px 20px;
+    padding: 0 28px;
+    height: var(--header-h);
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
   }
-
-  header img {
-    max-height: 60px;
-    max-width: 140px;
-    object-fit: contain;
-  }
-
-  .container {
-    background-color: var(--blanco);
-    padding: 40px;
-    max-width: 1000px;
-    margin: 20px auto;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  }
-
-  section {
-    display: none;
-    opacity: 0;
-    transition: opacity 0.6s ease-in-out;
-  }
-
-  section.active {
-    display: block;
-    opacity: 1;
-  }
-
-  .nav-buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-  }
-
-  button {
-    background-color: var(--azul-principal);
-    color: white;
-    font-weight: bold;
-    font-size: 16px;
-    padding: 12px 24px;
-    cursor: pointer;
-    border: none;
+  .header-left { display: flex; align-items: center; gap: 14px; }
+  .header-badge {
+    background: rgba(249,115,22,0.18);
+    border: 1px solid rgba(249,115,22,0.35);
     border-radius: 5px;
-    transition: background-color 0.3s ease;
+    padding: 4px 13px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    font-family: var(--font-display);
+    letter-spacing: 0.8px;
+    color: #fbbf80;
+    white-space: nowrap;
+  }
+  .header-divider { width: 1px; height: 22px; background: rgba(255,255,255,0.12); }
+  .header-section-name {
+    font-size: 0.78rem; font-weight: 400;
+    color: rgba(255,255,255,0.58);
+    max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    letter-spacing: 0.02em;
+  }
+  .header-logos { display: flex; align-items: center; gap: 10px; }
+  .header-logos img {
+    height: 38px; object-fit: contain; border-radius: 5px;
+    background-color: var(--blanco); padding: 4px 8px;
   }
 
-  button:hover {
-    background-color: var(--azul-hover);
+  /* ═══ BARRA DE PROGRESO ═══ */
+  #barraProgreso {
+    height: var(--progress-h);
+    background: var(--naranja);
+    width: 0%;
+    transition: width 0.5s var(--ease-out);
+    position: sticky;
+    top: var(--header-h);
+    z-index: 1001;
+  }
+  .progress-pct {
+    position: sticky;
+    top: calc(var(--header-h) + var(--progress-h) + 6px);
+    z-index: 1001; text-align: right; padding-right: 18px;
+    font-size: 0.65rem; font-weight: 700; font-family: var(--font-display);
+    color: var(--naranja); opacity: 0; transition: opacity 0.25s;
+    pointer-events: none; height: 0; letter-spacing: 0.05em;
+  }
+  .progress-pct.visible { opacity: 1; }
+
+  /* ═══ NAV DOTS ═══ */
+  #navDots {
+    position: fixed; right: 14px; top: 50%;
+    transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 6px; z-index: 900;
+  }
+  .nav-dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: rgba(0,85,107,0.18); cursor: pointer;
+    transition: all var(--t-med); border: none; padding: 0; position: relative;
+  }
+  .nav-dot:hover { background: var(--teal-medio); transform: scale(1.8); }
+  .nav-dot::before {
+    content: attr(aria-label);
+    position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
+    background: var(--teal-oscuro); color: rgba(255,255,255,0.9);
+    padding: 4px 10px; border-radius: 4px; font-size: 0.67rem;
+    font-family: var(--font-display); font-weight: 500; white-space: nowrap;
+    opacity: 0; pointer-events: none; transition: opacity 0.15s; letter-spacing: 0.02em;
+  }
+  .nav-dot:hover::before { opacity: 1; }
+  .nav-dot.active { background: var(--naranja); transform: scale(2); box-shadow: 0 0 0 2.5px rgba(249,115,22,0.22); }
+  .nav-dot.visited { background: rgba(0,136,168,0.5); }
+
+  /* ═══ CONTENEDOR ═══ */
+  .container {
+    background-color: var(--surface-1);
+    padding: var(--pad-y) var(--pad-x);
+    max-width: var(--max-w);
+    margin: 20px auto 90px;
+    border-radius: var(--radio-xl);
+    box-shadow: var(--shadow-xl);
+    position: relative;
+    overflow: hidden;
+    touch-action: pan-y;
+    border: 1px solid var(--borde);
+  }
+  .container::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 2px; background: var(--naranja);
   }
 
-  button:focus {
-    outline: 3px solid #ffa500;
+  /* ═══ SECCIONES ═══ */
+  section { display: none; opacity: 0; }
+  section.active { display: block; animation: sectionEnter 0.4s var(--ease-out) forwards; }
+  @keyframes sectionEnter {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  section.active .stagger { animation: staggerIn 0.38s var(--ease-out) both; }
+  section.active .stagger:nth-child(1)  { animation-delay: 0.04s; }
+  section.active .stagger:nth-child(2)  { animation-delay: 0.09s; }
+  section.active .stagger:nth-child(3)  { animation-delay: 0.14s; }
+  section.active .stagger:nth-child(4)  { animation-delay: 0.19s; }
+  section.active .stagger:nth-child(5)  { animation-delay: 0.24s; }
+  section.active .stagger:nth-child(6)  { animation-delay: 0.29s; }
+  section.active .stagger:nth-child(7)  { animation-delay: 0.34s; }
+  section.active .stagger:nth-child(8)  { animation-delay: 0.39s; }
+  section.active .stagger:nth-child(9)  { animation-delay: 0.44s; }
+  section.active .stagger:nth-child(10) { animation-delay: 0.49s; }
+  @keyframes staggerIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
-  h1, h2 {
-    color: var(--azul-principal);
+  /* ═══ INTRO ═══ */
+  .intro-hero { text-align: center; padding: 20px 0 28px; }
+  .intro-hero .logo-grande { width: 150px; margin-bottom: 28px; }
+  .intro-hero h1 {
+    font-family: var(--font-display); font-size: 1.85rem; font-weight: 800;
+    color: var(--teal-oscuro); margin: 0 0 8px; line-height: 1.18; letter-spacing: -0.4px;
+  }
+  .intro-hero h1 span { color: var(--naranja); }
+  .intro-hero .subtitle {
+    color: var(--texto-secondary); font-size: 0.88rem; margin-bottom: 28px;
+    font-weight: 400; letter-spacing: 0.03em; text-transform: uppercase;
+  }
+  .perfil-badges { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 20px; }
+  .perfil-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; border-radius: 4px; font-size: 0.78rem; font-weight: 600; font-family: var(--font-display); letter-spacing: 0.02em; }
+  .pb-pbi         { background: #e9f1f3; color: var(--teal-medio);  border: 1px solid #bcdce3; }
+  .pb-contratista { background: #fffbeb; color: #b45309;            border: 1px solid #fde68a; }
+  .pb-visitante   { background: #f0fdf4; color: #166534;            border: 1px solid #bbf7d0; }
+  .intro-obligatorio {
+    background: #fffbeb; border: 1px solid #fde68a; border-left: 3px solid var(--naranja);
+    border-radius: var(--radio); padding: 14px 18px;
+    display: flex; align-items: flex-start; gap: 12px; text-align: left; margin-bottom: 16px;
+  }
+  .intro-obligatorio .ico { flex-shrink: 0; margin-top: 1px; color: var(--naranja); display: inline-flex; }
+  .intro-obligatorio p { font-size: 0.875rem; color: #78350f; margin: 0; line-height: 1.6; }
+  .intro-obligatorio p strong { color: #92400e; }
+  .welcome-footer {
+    background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: var(--radio);
+    padding: 14px 18px; color: #166534; font-weight: 500; font-size: 0.875rem; line-height: 1.6;
+    display: flex; align-items: center; gap: 10px; justify-content: center; text-align: center;
   }
 
-  ul {
-    padding-left: 20px;
+  /* ═══ TIPOGRAFÍA ═══ */
+  h2 {
+    font-family: var(--font-display); color: var(--teal-oscuro); font-weight: 700;
+    font-size: 1.22rem; margin: 0 0 22px; padding-bottom: 14px;
+    border-bottom: 1px solid var(--borde); position: relative;
+    letter-spacing: -0.2px; line-height: 1.3;
+    display: flex; align-items: center; gap: 12px;
   }
-
-  a {
-    color: var(--azul-enlace);
+  h2::after {
+    content: ''; position: absolute; bottom: -1px; left: 0;
+    width: 36px; height: 2px; background: var(--naranja);
   }
-
-  img.qr {
-    width: 200px;
-    display: block;
-    margin: 20px auto;
+  .section-number {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 28px; height: 28px; background: var(--teal-oscuro); color: white;
+    border-radius: 5px; font-size: 0.75rem; font-weight: 700;
+    flex-shrink: 0; font-family: var(--font-display);
   }
+  h3 { font-family: var(--font-display); color: var(--teal-oscuro); font-weight: 700; font-size: 1.05rem; margin: 28px 0 14px; }
+  h4 { font-family: var(--font-display); margin: 0 0 8px; color: var(--teal-oscuro); font-weight: 600; font-size: 0.9rem; line-height: 1.4; display: flex; align-items: center; gap: 8px; }
+  p { margin: 0 0 14px; }
+  ul { padding-left: 18px; margin-bottom: 12px; }
+  li { margin-bottom: 5px; line-height: 1.65; }
+  a { color: var(--teal-claro); text-decoration: none; font-weight: 500; transition: color var(--t-fast); }
+  a:hover { color: var(--teal-medio); text-decoration: underline; }
+  strong { color: var(--texto); font-weight: 600; }
 
-  .card {
-    background: var(--gris-fondo);
-    border-left: 4px solid var(--azul-enlace);
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 6px;
-  }
+  /* ═══ MASCOTA ═══ */
+  .mascota { float: right; width: 58px; margin: 0 0 12px 14px; }
+  .mascota img { width: 100%; }
 
-  details {
-    background-color: var(--gris-fondo);
-    border-left: 4px solid var(--azul-enlace);
-    padding: 10px 15px;
-    margin-bottom: 10px;
-    border-radius: 6px;
-    cursor: pointer;
-  }
-
-  details[open] {
-    background-color: #e4f1f3;
-  }
-
-  .seccion-contenido {
-    background-color: var(--gris-fondo);
-    border-left: 6px solid var(--azul-enlace);
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.05);
-    margin-bottom: 30px;
-  }
-
-  .imagen-seccion {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-
+  /* ═══ IMÁGENES ═══ */
+  .imagen-seccion { text-align: center; margin: 20px 0; }
   .imagen-seccion img {
-    max-width: 100%;
-    height: auto;
-    max-height: 350px;
-    border-radius: 12px;
-    border: 1px solid #ccc;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    object-fit: cover;
-    transition: transform 0.3s ease;
+    max-width: 100%; height: auto; max-height: 360px;
+    border-radius: var(--radio-lg); border: 1px solid var(--borde); box-shadow: var(--shadow-md);
   }
 
-  .imagen-seccion img:hover {
-    transform: scale(1.02);
+  /* ═══ CARDS ═══ */
+  .card {
+    background: var(--surface-1); border: 1px solid var(--borde); border-left: 3px solid var(--teal-claro);
+    padding: 18px 20px; margin-bottom: 12px; border-radius: var(--radio-lg);
+    box-shadow: var(--shadow-xs); transition: box-shadow var(--t-med);
   }
+  .card:hover { box-shadow: var(--shadow-md); }
+  .card h4 { margin-bottom: 8px; }
+  .card ul { margin-bottom: 0; }
+  .card p:last-child { margin-bottom: 0; }
 
-  .img-superior-derecha {
-    float: right;
-    margin-left: 20px;
-    margin-top: -10px;
-    margin-bottom: 10px;
-    max-width: 90px;
-    z-index: 1;
+  /* ═══ ACORDEÓN ═══ */
+  details {
+    background: var(--surface-1); border: 1px solid var(--borde); border-left: 3px solid var(--teal-medio);
+    padding: 13px 17px; margin-bottom: 7px; border-radius: var(--radio-lg);
+    cursor: pointer; box-shadow: var(--shadow-xs);
+    transition: border-left-color var(--t-fast), box-shadow var(--t-fast);
   }
-
-  .img-superior-derecha img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-  }
-
-  section.has-personaje {
-    padding-right: 120px;
-  }
-
-  .grid-dos-columnas {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-  }
-
-  @media screen and (max-width: 768px) {
-    .img-superior-derecha {
-      float: none;
-      display: block;
-      margin: 0 auto 20px auto;
-      text-align: center;
-    }
-
-    section.has-personaje {
-      padding-right: 0;
-    }
-
-    .grid-dos-columnas {
-      grid-template-columns: 1fr !important;
-    }
-
-    .card ul,
-    .card p {
-      font-size: 15px;
-    }
-
-    details {
-      padding: 8px 12px;
-    }
-
-    details p,
-    details ul {
-      font-size: 14px;
-    }
-
-    details ul {
-      padding-left: 18px;
-    }
-
-    details summary {
-      font-size: 15px;
-    }
-
-    .vial-grid {
-      grid-template-columns: 1fr !important;
-      gap: 15px;
-    }
-
-    .vial-grid .card h4 {
-      font-size: 16px;
-    }
-
-    .vial-grid .card p {
-      font-size: 14px;
-    }
-  }
-
+  details:hover { border-left-color: var(--teal-claro); box-shadow: var(--shadow-sm); }
   details summary {
-    font-size: 16px;
+    font-family: var(--font-display); font-weight: 600; font-size: 0.9rem;
+    color: var(--teal-oscuro); display: flex; align-items: center; gap: 12px;
+    list-style: none;
   }
-
-  details p,
-  details ul {
-    font-size: 15px;
+  details summary::-webkit-details-marker { display: none; }
+  details summary .summary-text { flex: 1; }
+  details summary::after {
+    content: '+'; font-size: 1rem; font-weight: 300; opacity: 0.45;
+    flex-shrink: 0; transition: opacity var(--t-fast); font-family: var(--font-display);
+    width: 20px; text-align: center;
   }
-</style>
+  details[open] summary::after { content: '−'; opacity: 0.7; }
+  details[open] { border-left-color: var(--naranja); background: #fffdf8; box-shadow: var(--shadow-sm); }
+  details > p, details > ul { margin-top: 12px; font-size: 0.875rem; }
+  details > p:last-child { margin-bottom: 0; }
 
+  /* ═══ ICONOS ═══ */
+  .lc-icon { width: 18px; height: 18px; stroke-width: 1.8; flex-shrink: 0; vertical-align: middle; }
+  .summary-ico {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 34px; height: 34px; border-radius: var(--radio); flex-shrink: 0;
+  }
+  .summary-ico .lc-icon { width: 19px; height: 19px; }
+  .si-alto   { background: #fef2f2; color: #dc2626; }
+  .si-medio  { background: #fffbeb; color: #b45309; }
+  .si-teal   { background: #e9f1f3; color: var(--teal-medio); }
+  .si-rojo   { background: #fef2f2; color: #dc2626; }
+  .h4-ico { display: inline-flex; color: var(--teal-medio); flex-shrink: 0; }
+  .h4-ico .lc-icon { width: 19px; height: 19px; stroke-width: 1.9; }
+  .h4-ico.ico-naranja { color: var(--naranja); }
+  .h4-ico.ico-rojo { color: var(--rojo); }
+  .h4-ico.ico-verde { color: var(--verde); }
+  .card-ico {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 38px; height: 38px; border-radius: var(--radio); margin-bottom: 10px;
+    background: var(--surface-2); color: var(--teal-medio);
+  }
+  .card-ico .lc-icon { width: 20px; height: 20px; stroke-width: 1.9; }
+  .inline-ico { display: inline-flex; vertical-align: -3px; margin-right: 5px; color: var(--teal-medio); }
+  .inline-ico .lc-icon { width: 16px; height: 16px; stroke-width: 1.9; }
+  .prev-ico { display: inline-flex; vertical-align: -3px; margin-right: 5px; color: var(--verde); }
+  .prev-ico .lc-icon { width: 16px; height: 16px; }
+  .link-ico { display: inline-flex; vertical-align: -2px; margin-right: 4px; }
+  .link-ico .lc-icon { width: 14px; height: 14px; }
+  .li-check { display: inline-flex; vertical-align: -3px; margin-right: 7px; color: var(--verde); }
+  .li-check .lc-icon { width: 16px; height: 16px; stroke-width: 2.2; }
+
+  /* ═══ MEDIDA PREVENTIVA ═══ */
+  .risk-preventiva {
+    background: #f0fdf4; color: #166534; font-size: 0.85rem; font-weight: 500;
+    padding: 9px 13px; border-radius: var(--radio); margin-top: 10px; display: block;
+    border: 1px solid #bbf7d0; line-height: 1.55;
+  }
+  .risk-preventiva strong { color: #166534; }
+
+  /* ═══ NORMATIVA BAR ═══ */
+  .normativa-bar {
+    background: var(--surface-2); border: 1px solid var(--borde);
+    border-radius: var(--radio); padding: 8px 12px; margin-top: 10px;
+    font-size: 0.8rem; color: var(--texto-secondary);
+  }
+  .normativa-bar strong { color: var(--teal-medio); }
+
+  /* ═══ GRID 2 COLUMNAS ═══ */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  /* ═══ REGLAS DE ORO ═══ */
+  .rules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(256px, 1fr)); gap: 12px; }
+  .rule-card {
+    background: var(--surface-1); border: 1px solid var(--borde); border-top: 2px solid var(--teal-oscuro);
+    padding: 22px 16px 16px; border-radius: var(--radio-lg); box-shadow: var(--shadow-xs);
+    transition: box-shadow var(--t-med), border-top-color var(--t-med); position: relative;
+  }
+  .rule-card:hover { box-shadow: var(--shadow-md); border-top-color: var(--naranja); }
+  .rule-num {
+    position: absolute; top: -11px; left: 14px; width: 22px; height: 22px;
+    background: var(--teal-oscuro); color: white; border-radius: 5px;
+    font-size: 0.68rem; font-weight: 700; font-family: var(--font-display);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .rule-card h4 { font-size: 0.85rem; padding-top: 2px; margin-bottom: 9px; padding-bottom: 9px; border-bottom: 1px solid var(--borde); display: block; }
+  .rule-card ul { padding-left: 15px; margin: 0; font-size: 0.82rem; color: var(--texto-secondary); }
+  .rule-card li { margin-bottom: 4px; }
+  .rules-footer { text-align: right; font-size: 0.72rem; color: var(--texto-muted); margin-top: 18px; font-family: var(--font-display); }
+
+  /* ═══ RESIDUOS ═══ */
+  .residuo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-bottom: 16px; }
+  .residuo-card { border-radius: var(--radio-lg); padding: 16px 14px; text-align: center; box-shadow: var(--shadow-xs); transition: box-shadow var(--t-med); }
+  .residuo-card:hover { box-shadow: var(--shadow-md); }
+  .residuo-card .r-ico { display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:50%; margin-bottom:8px; }
+  .residuo-card .r-ico .lc-icon { width: 22px; height: 22px; }
+  .residuo-card h4 { font-size: 0.8rem; margin-bottom: 4px; display: block; }
+  .residuo-card p { font-size: 0.76rem; margin: 0; }
+  .r-blanco { background: #f8fafc; border: 1px solid #cbd5e1; color: #334155; }
+  .r-blanco h4 { color: #334155; }
+  .r-blanco .r-ico { background:#fff; border:1px solid #cbd5e1; color:#64748b; }
+  .r-verde  { background: #f0fdf4; border: 1px solid #86efac; color: #166534; }
+  .r-verde h4 { color: #166534; }
+  .r-verde .r-ico { background:#dcfce7; color:#16a34a; }
+  .r-negro  { background: #1e293b; border: 1px solid #334155; color: #f1f5f9; }
+  .r-negro h4 { color: #f1f5f9; }
+  .r-negro .r-ico { background:#334155; color:#f1f5f9; }
+
+  /* ═══ MINI-JUEGOS ═══ */
+  .game-container {
+    background: var(--fondo-warm); border: 1px solid var(--borde); border-top: 2px solid var(--naranja);
+    border-radius: var(--radio-lg); padding: 24px 20px; text-align: center;
+    margin: 24px 0; box-shadow: var(--shadow-xs);
+  }
+  .game-title { font-family: var(--font-display); font-weight: 700; color: var(--teal-oscuro); margin-bottom: 8px; font-size: 1rem; display:flex; align-items:center; justify-content:center; gap:8px; }
+  .game-title .lc-icon { width: 19px; height: 19px; color: var(--naranja); }
+  .game-item {
+    font-size: 0.97rem; font-weight: 600; color: var(--teal-oscuro);
+    background: var(--surface-1); padding: 13px 20px; border-radius: var(--radio);
+    display: inline-block; margin-bottom: 18px; box-shadow: var(--shadow-sm);
+    border: 1px solid var(--borde); transition: transform 0.3s;
+  }
+  .game-bins { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .game-bin {
+    padding: 11px 16px; border-radius: var(--radio); font-weight: 600;
+    font-family: var(--font-display); font-size: 0.84rem; cursor: pointer;
+    border: 1px solid var(--borde); flex: 1 1 96px;
+    transition: box-shadow var(--t-fast), transform var(--t-fast);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .game-bin:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+  .game-bin:active { transform: translateY(0); }
+  .game-bin.blanco  { background: #fff; border-color: #cbd5e1; color: #334155; }
+  .game-bin.verde   { background: #f0fdf4; border-color: #86efac; color: #166534; }
+  .game-bin.negro   { background: #1e293b; border-color: #334155; color: #f1f5f9; }
+  .game-bin.rutina  { background: #f0fdf4; border-color: #86efac; color: #166534; }
+  .game-bin.permiso { background: #fef2f2; border-color: #fca5a5; color: #991b1b; }
+  .game-feedback { margin-top: 16px; font-weight: 600; min-height: 22px; font-size: 0.875rem; font-family: var(--font-display); }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+
+  /* ═══ ALARMAS EN CAMPO ═══ */
+  .alarma-card {
+    display: flex; align-items: flex-start; gap: 14px;
+    background: var(--surface-1); border: 1px solid var(--borde); border-left: 3px solid var(--teal-claro);
+    padding: 16px 18px; margin-bottom: 10px; border-radius: var(--radio-lg); box-shadow: var(--shadow-xs);
+  }
+  .alarma-card.danger { border-left-color: var(--rojo); }
+  .alarma-card.warn { border-left-color: var(--naranja); }
+  .alarma-ico { flex-shrink: 0; display: inline-flex; color: var(--teal-medio); margin-top: 2px; }
+  .alarma-card.danger .alarma-ico { color: var(--rojo); }
+  .alarma-card.warn .alarma-ico { color: var(--naranja); }
+  .alarma-ico .lc-icon { width: 24px; height: 24px; }
+  .alarma-body h4 { margin-bottom: 3px; }
+  .alarma-body p { margin: 0; font-size: 0.85rem; color: var(--texto-secondary); }
+
+  /* ═══ NOTA / ALERTA ═══ */
+  .nota-box {
+    background: var(--surface-2); border: 1px solid var(--borde); border-left: 3px solid var(--teal-medio);
+    border-radius: var(--radio); padding: 12px 16px; margin-top: 16px;
+    font-size: 0.85rem; color: var(--texto-secondary); display: flex; align-items: flex-start; gap: 10px;
+  }
+  .nota-box.warn { background: #fffbeb; border-color: #fde68a; border-left-color: var(--naranja); color: #78350f; }
+  .nota-box.danger { background: #fef2f2; border-color: #fecaca; border-left-color: var(--rojo); color: #991b1b; }
+  .nota-box.alt { background: #e9f1f3; border-color: #bcdce3; border-left-color: var(--teal-claro); color: var(--teal-oscuro); }
+  .nota-box .nb-ico { flex-shrink: 0; display: inline-flex; margin-top: 1px; }
+
+  /* ═══ QR ═══ */
+  .qr-box { text-align: center; background: var(--surface-2); padding: 28px 20px; border-radius: var(--radio-lg); border: 1px solid var(--borde); max-width: 320px; margin: 20px auto; }
+  .qr-box img { width: 180px; border-radius: var(--radio); border: 1px solid var(--borde); }
+
+  /* ═══ CHECKLIST ═══ */
+  .checklist-list { list-style: none; padding: 0; margin-bottom: 0; }
+  .checklist-list li {
+    margin-bottom: 7px; background: var(--surface-1); padding: 12px 15px;
+    border: 1px solid var(--borde); border-radius: var(--radio); display: flex; align-items: center;
+    transition: border-color var(--t-fast), background var(--t-fast);
+  }
+  .checklist-list li:hover { border-color: var(--teal-claro); }
+  .checklist-list li.checked-ok { background: #f0fdf4; border-color: #86efac; }
+  .checklist-list li.checked-ok label span { text-decoration: line-through; color: var(--texto-muted); }
+  .checklist-list label { cursor: pointer; width: 100%; display: flex; align-items: center; gap: 12px; font-size: 0.875rem; }
+  .checklist-list input[type=checkbox] { width: 18px; height: 18px; flex-shrink: 0; accent-color: var(--verde); cursor: pointer; }
+  .advertencia-checklist { background: #fef2f2; color: #dc2626; padding: 13px 16px; border: 1px solid #fecaca; border-left: 3px solid var(--rojo); border-radius: var(--radio); margin-top: 14px; font-weight: 600; font-size: 0.875rem; display: flex; align-items: center; gap: 8px; }
+
+  /* ═══ EMERGENCIAS LISTA ═══ */
+  .emerg-list { list-style: none; padding: 0; }
+  .emerg-list li {
+    display: flex; align-items: flex-start; gap: 12px; padding: 11px 14px;
+    background: var(--surface-1); border: 1px solid var(--borde); border-radius: var(--radio);
+    margin-bottom: 7px; font-size: 0.9rem;
+  }
+  .emerg-ico { display: inline-flex; flex-shrink: 0; color: var(--teal-medio); margin-top: 1px; }
+  .emerg-ico .lc-icon { width: 18px; height: 18px; }
+
+  /* ═══ CIERRE ═══ */
+  .cierre-hero { text-align: center; padding: 10px 0 24px; }
+  .cierre-trophy {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 64px; height: 64px; border-radius: 50%; background: #f0fdf4;
+    border: 1px solid #bbf7d0; color: var(--verde); margin-bottom: 14px;
+  }
+  .cierre-trophy .lc-icon { width: 32px; height: 32px; stroke-width: 1.7; }
+  .video-card {
+    background: var(--surface-2); border: 1px solid var(--borde); border-radius: var(--radio-lg);
+    padding: 20px; transition: box-shadow var(--t-med);
+  }
+  .video-card:hover { box-shadow: var(--shadow-md); }
+  .final-button {
+    display: inline-flex; align-items: center; gap: 9px; background: var(--verde); color: white;
+    padding: 14px 40px; border-radius: var(--radio); font-family: var(--font-display); font-weight: 700;
+    text-decoration: none; font-size: 0.97rem; transition: background var(--t-fast), box-shadow var(--t-fast); border: none;
+  }
+  .final-button:hover { background: #15803d; text-decoration: none; color: white; box-shadow: var(--shadow-md); }
+
+  /* ═══ NAVEGACIÓN INFERIOR ═══ */
+  .nav-buttons {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--borde); gap: 12px;
+  }
+  .nav-btn {
+    display: inline-flex; align-items: center; gap: 7px; background: var(--teal-oscuro); color: white;
+    font-family: var(--font-display); font-weight: 600; padding: 11px 26px; border: none;
+    border-radius: var(--radio); cursor: pointer; transition: background var(--t-fast), box-shadow var(--t-fast);
+    font-size: 0.875rem; -webkit-tap-highlight-color: transparent; letter-spacing: 0.01em;
+  }
+  .nav-btn:hover { background: var(--teal-medio); box-shadow: var(--shadow-md); }
+  .nav-btn-prev { background: var(--surface-1); color: var(--texto-2); border: 1px solid var(--borde); }
+  .nav-btn-prev:hover { background: var(--surface-2); box-shadow: var(--shadow-sm); }
+  .nav-step-counter { font-size: 0.75rem; color: var(--texto-muted); font-weight: 600; text-align: center; flex: 1; font-family: var(--font-display); letter-spacing: 0.04em; }
+
+  .swipe-hint { display: none; text-align: center; padding: 8px; font-size: 0.7rem; color: var(--texto-muted); opacity: 0.6; }
+
+  /* ═══ BANNER REPORTE ═══ */
+  .reporte-banner { display: flex; align-items: flex-start; gap: 14px; background: var(--teal-medio); color: white; padding: 16px 20px; border-radius: var(--radio-lg); margin-bottom: 20px; box-shadow: var(--shadow-sm); }
+  .reporte-banner .rb-ico { flex-shrink: 0; display: inline-flex; margin-top: 2px; color: rgba(255,255,255,0.95); }
+  .reporte-banner .rb-ico .lc-icon { width: 28px; height: 28px; }
+  .reporte-banner .rb-text strong { display: block; color: white; font-family: var(--font-display); font-size: 0.97rem; margin-bottom: 4px; }
+  .reporte-banner .rb-text span { font-size: 0.85rem; line-height: 1.55; color: rgba(255,255,255,0.9); }
+
+  /* ═══ FLUJOGRAMA DE PASOS ═══ */
+  .proceso-steps { position: relative; padding-left: 4px; }
+  .paso-item { display: flex; gap: 14px; padding-bottom: 16px; position: relative; }
+  .paso-item:not(:last-child)::before { content: ''; position: absolute; left: 19px; top: 40px; bottom: -2px; width: 2px; background: var(--borde); }
+  .paso-num { flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: white; border-radius: 50%; font-family: var(--font-display); font-weight: 700; box-shadow: var(--shadow-xs); z-index: 1; }
+  .paso-body { padding-top: 6px; }
+  .paso-body strong { display: block; font-family: var(--font-display); color: var(--teal-oscuro); font-size: 0.92rem; margin-bottom: 3px; }
+  .paso-body span { font-size: 0.85rem; color: var(--texto-secondary); line-height: 1.55; }
+
+  /* ═══ VÍAS DE REPORTE ═══ */
+  .via-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 8px 0 4px; }
+  .via-card { border-radius: var(--radio-lg); padding: 18px; border: 1px solid var(--borde); box-shadow: var(--shadow-xs); }
+  .via-card.directo { background: #e9f1f3; border-color: #bcdce3; }
+  .via-card.tercero { background: #fff7ed; border-color: #fed7aa; }
+  .via-card h4 { font-size: 0.92rem; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(0,0,0,0.06); }
+  .via-card.directo h4 { color: var(--teal-medio); }
+  .via-card.tercero h4 { color: #c2410c; }
+  .via-card ol { margin: 0; padding-left: 18px; font-size: 0.85rem; color: var(--texto-secondary); }
+  .via-card ol li { margin-bottom: 6px; line-height: 1.5; }
+  .contacto-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  #liveAnnouncer { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+  :focus-visible { outline: 2px solid var(--teal-claro); outline-offset: 2px; }
+  button:focus:not(:focus-visible) { outline: none; }
+
+  /* ═══ RESPONSIVE ═══ */
+  @media screen and (max-width: 768px) {
+    :root { --pad-x: 20px; --pad-y: 26px; }
+    .container { margin: 10px 8px 80px; border-radius: var(--radio-lg); }
+    .header-section-name, .header-divider { display: none; }
+    .grid-2, .rules-grid { grid-template-columns: 1fr !important; }
+    .nav-buttons { flex-wrap: wrap; }
+    .nav-btn { padding: 10px 18px; font-size: 0.82rem; }
+    #navDots { display: none; }
+    .intro-hero h1 { font-size: 1.5rem; }
+    .final-button { padding: 13px 26px; font-size: 0.9rem; }
+    .swipe-hint { display: block; }
+    header { padding: 0 16px; }
+  }
+  @media screen and (max-width: 480px) {
+    .header-logos img { height: 30px; }
+    .header-badge { font-size: 0.68rem; padding: 3px 9px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  }
+  </style>
 </head>
 <body>
-<header>
-  <div><strong>Inducción HSEQ visitantes y contratistas</strong></div>
-  <img src="https://i.postimg.cc/wBGR6r9M/Logo-OEC-Editado-2-1.png">
+
+<div id="liveAnnouncer" aria-live="polite" aria-atomic="true"></div>
+
+<header role="banner">
+  <div class="header-left">
+    <div class="header-badge" id="headerBadge" aria-label="Sección actual">1 / 16</div>
+    <div class="header-divider"></div>
+    <div class="header-section-name" id="headerSectionName">Bienvenida</div>
+  </div>
+  <div class="header-logos">
+    <img src="https://i.postimg.cc/wBGR6r9M/Logo-OEC-Editado-2-1.png" alt="Logo Omega Energy" loading="eager">
+  </div>
 </header>
-<div id="barraProgreso" style="height: 6px; background-color: #007BFF; width: 0%; position: fixed; top: 0; left: 0; z-index: 999; transition: width 0.4s;"></div>
 
-<div class="container">
-  <section class="active">
-    <div class="seccion-contenido">
-      <p style="font-size: 16px; color: #333; margin-top: 15px;">
-      Esta inducción está diseñada para brindarte la información clave que necesitas para actuar de forma <strong>segura</strong>, <strong>responsable</strong> y en coherencia con nuestra <strong>cultura HSEQ</strong>.
+<div id="barraProgreso" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Progreso de la inducción"></div>
+<div class="progress-pct" id="progressPct" aria-hidden="true"></div>
+
+<nav id="navDots" aria-label="Navegación rápida entre secciones"></nav>
+
+<main class="container" id="mainContainer" role="main">
+
+  <!-- ════════ 1 — BIENVENIDA ════════ -->
+  <section class="active" data-title="Bienvenida" aria-label="Sección 1: Bienvenida">
+    <div class="intro-hero">
+      <img src="https://i.postimg.cc/wBGR6r9M/Logo-OEC-Editado-2-1.png" alt="Logo Omega Energy" class="logo-grande" loading="eager">
+      <h1>Inducción HSEQ<br><span>Bloque Buenavista</span></h1>
+      <p class="subtitle">Omega Energy Colombia · Exploración y Producción</p>
+
+      <div class="perfil-badges stagger">
+        <span class="perfil-badge pb-pbi"><span class="inline-ico" style="color:var(--teal-medio)"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Trabajador / En misión</span>
+        <span class="perfil-badge pb-contratista"><span class="inline-ico" style="color:#b45309"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span>Contratista</span>
+        <span class="perfil-badge pb-visitante"><span class="inline-ico" style="color:#166534"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span>Visitante</span>
+      </div>
+
+      <div class="intro-obligatorio stagger">
+        <span class="ico"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg></span>
+        <p>Esta inducción está diseñada para que toda persona —trabajador directo o en misión, contratista o visitante— cuente con la información clave para actuar de forma <strong>segura</strong>, <strong>responsable</strong> y en coherencia con nuestra <strong>cultura HSEQ</strong>. Es <strong>obligatoria y autónoma</strong>; su aprobación es requisito previo para cualquier ingreso o actividad dentro de nuestras instalaciones.</p>
+      </div>
+
+      <div class="welcome-footer stagger">
+        <span class="inline-ico" style="color:#166534"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></svg></span>
+        ¡Gracias por sumarte a un entorno más seguro, eficiente y sostenible!
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ 2 — OBJETIVO ════════ -->
+  <section data-title="Objetivo de la Inducción" aria-label="Sección 2: Objetivo">
+    <div class="mascota"><img src="https://i.postimg.cc/Dz0qgn8x/Chat-GPT-Image-Jun-19-2025-09-30-26-AM.png" alt="" loading="lazy"></div>
+    <h2><span class="section-number">2</span>Objetivo de la Inducción</h2>
+
+    <div class="imagen-seccion stagger">
+      <img src="https://i.postimg.cc/2SLNDkH3/2-DJI-0290.jpg" alt="Bloque Buenavista - Omega Energy">
+    </div>
+
+    <p class="stagger">Brindar a toda persona —trabajador, contratista o visitante— las herramientas y conocimientos esenciales en materia de Seguridad, Salud, Ambiente y Calidad (HSEQ), garantizando la integridad de las personas, el entorno y la continuidad operativa.</p>
+  </section>
+
+  <!-- ════════ 3 — POLÍTICAS ════════ -->
+  <section data-title="Políticas Corporativas" aria-label="Sección 3: Políticas Corporativas">
+    <div class="mascota"><img src="https://i.postimg.cc/Dz0qgn8x/Chat-GPT-Image-Jun-19-2025-09-30-26-AM.png" alt="" loading="lazy"></div>
+    <h2><span class="section-number">3</span>Políticas Corporativas</h2>
+    <p class="stagger">Estas son las políticas esenciales que rigen nuestro actuar diario en Omega:</p>
+
+    <details class="stagger">
+      <summary><span class="summary-ico si-teal"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="summary-text">Política Integral HSEQ</span></summary>
+      <p>Establece nuestro compromiso con la protección de la vida, la salud, el ambiente y la calidad en todos los procesos. Promueve la mejora continua, la prevención de incidentes y el cumplimiento de la normatividad aplicable. <a href="https://drive.google.com/file/d/1omlq_CWbL5AbBuM-ZY2SnjlvBZGhbRRf/view?usp=sharing" target="_blank" rel="noopener"><span class="link-ico"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg></span>Ver PDF</a></p>
+    </details>
+
+    <details class="stagger">
+      <summary><span class="summary-ico si-rojo"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/></svg></span><span class="summary-text">Política de prevención SPA</span></summary>
+      <p>Fomenta ambientes seguros y saludables mediante acciones de promoción, prevención y acompañamiento, orientadas a reducir los riesgos asociados al uso de sustancias psicoactivas en contextos laborales. <a href="https://drive.google.com/file/d/1yXcr2IgKqqtAsfnHfCK5cyJ_P6geaEti/view?usp=sharing" target="_blank" rel="noopener"><span class="link-ico"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg></span>Ver PDF</a></p>
+    </details>
+
+    <details class="stagger">
+      <summary><span class="summary-ico si-teal"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg></span><span class="summary-text">Política de seguridad vial</span></summary>
+      <p>Promueve una cultura de movilidad segura dentro y fuera de nuestras instalaciones, mediante la prevención de accidentes, el respeto a las normas de tránsito y la concientización sobre comportamientos responsables. <a href="https://drive.google.com/file/d/1VyYUdSryrqoBhFA1MuAicZYog6pAOJpr/view?usp=sharing" target="_blank" rel="noopener"><span class="link-ico"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg></span>Ver PDF</a></p>
+    </details>
+
+    <div class="nota-box stagger"><span class="nb-ico" style="color:var(--teal-medio)"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span><div>Es tu responsabilidad conocerlas y aplicarlas en todo momento durante tu permanencia en nuestras instalaciones.</div></div>
+  </section>
+
+  <!-- ════════ 4 — PELIGROS Y RIESGOS ════════ -->
+  <section data-title="Peligros y Riesgos en Campo" aria-label="Sección 4: Peligros y Riesgos">
+    <div class="mascota"><img src="https://i.postimg.cc/Dz0qgn8x/Chat-GPT-Image-Jun-19-2025-09-30-26-AM.png" alt="" loading="lazy"></div>
+    <h2><span class="section-number">4</span>Peligros y Riesgos en Campo</h2>
+    <p class="stagger">Durante tu permanencia en este centro de trabajo podrías estar expuesto a diversos peligros operativos. A continuación, te presentamos los más representativos para este centro de trabajo:</p>
+
+    <details class="stagger">
+      <summary><span class="summary-ico si-alto"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></span><span class="summary-text">Riesgo eléctrico</span></summary>
+      <p>Tableros y equipos energizados representan peligro de electrocución o arco eléctrico.</p>
+      <span class="risk-preventiva"><span class="prev-ico"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><strong>Medida preventiva:</strong> No toques ni te acerques a equipos eléctricos sin autorización expresa del área técnica.</span>
+    </details>
+
+    <details class="stagger">
+      <summary><span class="summary-ico si-alto"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v8.5a2.5 2.5 0 0 1-5 0V9"/><path d="M7 15h.01"/><path d="M14 2v8.5a2.5 2.5 0 0 0 5 0V9"/><path d="M17 15h.01"/><path d="M5 8h14"/><path d="M9 22a3 3 0 0 1-3-3v-4h12v4a3 3 0 0 1-3 3z"/></svg></span><span class="summary-text">Riesgos químicos</span></summary>
+      <p>Exposición a combustibles, lubricantes, ácidos u otros productos que pueden causar quemaduras, intoxicación o reacciones.</p>
+      <span class="risk-preventiva"><span class="prev-ico"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><strong>Medida preventiva:</strong> Usa siempre el EPP suministrado (botas, gafas, guantes) y no manipules sustancias químicas.</span>
+    </details>
+
+    <details class="stagger">
+      <summary><span class="summary-ico si-alto"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></span><span class="summary-text">Riesgos mecánicos</span></summary>
+      <p>Equipos rotativos, poleas, fajas y herramientas en operación pueden generar atrapamientos o golpes.</p>
+      <span class="risk-preventiva"><span class="prev-ico"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><strong>Medida preventiva:</strong> Mantente fuera del alcance de equipos en movimiento y respeta las zonas demarcadas.</span>
+    </details>
+
+    <details class="stagger">
+      <summary><span class="summary-ico si-medio"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M16 2v5h5"/><path d="M21 6 13 14l-4-4-6 6"/><path d="M3 16v5h5"/></svg></span><span class="summary-text">Caídas a nivel</span></summary>
+      <p>Superficies húmedas, irregulares o con presencia de barro pueden causar tropiezos o resbalones.</p>
+      <span class="risk-preventiva"><span class="prev-ico"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><strong>Medida preventiva:</strong> Usa calzado adecuado, camina con precaución y evita correr en zonas operativas.</span>
+    </details>
+
+    <details class="stagger">
+      <summary><span class="summary-ico si-alto"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m18 10-2 4M6 4l4 16M14 4l-2 4"/><circle cx="9" cy="4" r="2"/></svg></span><span class="summary-text">Caídas desde altura</span></summary>
+      <p>Riesgo al acceder a escaleras, plataformas o estructuras.</p>
+      <span class="risk-preventiva"><span class="prev-ico"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><strong>Medida preventiva:</strong> No subas a lugares elevados sin autorización y sin los equipos de protección contra caídas.</span>
+    </details>
+
+    <details class="stagger">
+      <summary><span class="summary-ico si-alto"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg></span><span class="summary-text">Áreas clasificadas</span></summary>
+      <p>Zonas con presencia de gases o vapores inflamables. Riesgo de explosión o incendio.</p>
+      <span class="risk-preventiva"><span class="prev-ico"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><strong>Medida preventiva:</strong> No ingreses a áreas señalizadas como peligrosas sin compañía ni autorización.</span>
+    </details>
+
+    <details class="stagger">
+      <summary><span class="summary-ico si-medio"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/></svg></span><span class="summary-text">Temperaturas y presiones elevadas</span></summary>
+      <p>Contactos con equipos calientes o presurizados pueden causar quemaduras o accidentes por liberación de energía.</p>
+      <span class="risk-preventiva"><span class="prev-ico"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><strong>Medida preventiva:</strong> No toques válvulas, tuberías ni superficies metálicas; mantén distancia segura.</span>
+    </details>
+
+    <details class="stagger">
+      <summary><span class="summary-ico si-medio"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M19 16.9A5 5 0 0 0 18 7h-1.26a8 8 0 1 0-11.62 9"/><path d="m13 12-3 5h4l-3 5"/></svg></span><span class="summary-text">Tormentas eléctricas</span></summary>
+      <p>Riesgo de descargas eléctricas si se está al aire libre durante tormentas.</p>
+      <span class="risk-preventiva"><span class="prev-ico"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><strong>Medida preventiva:</strong> Suspende cualquier actividad a cielo abierto y refúgiate en zonas cubiertas y seguras.</span>
+    </details>
+
+    <div class="nota-box alt stagger"><span class="nb-ico" style="color:var(--teal-claro)"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 17.58A5 5 0 0 0 18 8h-1.26A8 8 0 1 0 4 16.25"/><path d="M8 19h.01M8 22h.01M12 19h.01M12 22h.01M16 19h.01M16 22h.01"/></svg></span><div>Ten presente que este centro de trabajo está ubicado a más de 2.600 metros sobre el nivel del mar, por lo que es importante protegerse del frío con ropa térmica adecuada y mantenerse hidratado durante la jornada.</div></div>
+
+    <div class="nota-box stagger"><span class="nb-ico" style="color:var(--teal-medio)"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span><div>Además, pueden existir otros riesgos propios de la operación que serán comunicados durante tu ingreso. Sigue siempre las instrucciones del personal responsable o del área HSEQ.</div></div>
+  </section>
+
+  <!-- ════════ 5 — REGLAS DE ORO ════════ -->
+  <section data-title="Reglas de Oro" aria-label="Sección 5: Reglas de Oro">
+    <div class="mascota"><img src="https://i.postimg.cc/Dz0qgn8x/Chat-GPT-Image-Jun-19-2025-09-30-26-AM.png" alt="" loading="lazy"></div>
+    <h2><span class="section-number">5</span>Conoce Nuestras Reglas de Oro</h2>
+    <p class="stagger" style="font-weight:600; color:var(--teal-medio);">Reglas de Oro – Compromiso con la Vida</p>
+
+    <div class="rules-grid">
+      <div class="rule-card stagger"><div class="rule-num">1</div><h4>Antes de empezar, revisa y planifica</h4><ul><li>Obtén el permiso de trabajo antes de iniciar.</li><li>Realiza el ATS con tu equipo, incluso en tareas rutinarias.</li><li>Verifica que exista el procedimiento PON y anexos requeridos.</li></ul></div>
+      <div class="rule-card stagger"><div class="rule-num">2</div><h4>Aísla bien las energías peligrosas</h4><ul><li>Bloquea, etiqueta y aísla todas las fuentes de energía antes de intervenir.</li><li>Incluye eléctricas, térmicas, neumáticas y partes móviles.</li><li>No retires bloqueos sin autorización.</li></ul></div>
+      <div class="rule-card stagger"><div class="rule-num">3</div><h4>Cuidado con trabajos en caliente</h4><ul><li>Verifica el permiso y el monitoreo de gases.</li><li>Ten extintores disponibles y listos para usar.</li><li>Retira materiales inflamables del área.</li></ul></div>
+      <div class="rule-card stagger"><div class="rule-num">4</div><h4>Con cargas, no te la juegues</h4><ul><li>Revisa eslingas, ganchos y estado de la carga.</li><li>Nunca estés bajo una carga suspendida.</li><li>Mantén comunicación clara con el operador.</li></ul></div>
+      <div class="rule-card stagger"><div class="rule-num">5</div><h4>Protégete al trabajar en altura</h4><ul><li>Usa arnés y puntos de anclaje certificados.</li><li>Asegura herramientas y materiales.</li><li>Verifica tu equipo antes de usarlo.</li></ul></div>
+      <div class="rule-card stagger"><div class="rule-num">6</div><h4>Conduce con responsabilidad</h4><ul><li>Usa el cinturón de seguridad siempre.</li><li>No uses el celular ni manejes fatigado.</li><li>Respeta los límites de velocidad.</li></ul></div>
+      <div class="rule-card stagger"><div class="rule-num">7</div><h4>Usa siempre tu EPP</h4><ul><li>Selecciona el EPP adecuado según la tarea.</li><li>Verifica que esté en buen estado antes de usarlo.</li><li>Aplica siempre, incluso en tareas cortas o rutinarias.</li></ul></div>
+      <div class="rule-card stagger"><div class="rule-num">8</div><h4>Maneja correctamente sustancias peligrosas</h4><ul><li>Etiqueta los productos correctamente.</li><li>Consulta la hoja de seguridad antes de usarlos.</li><li>Actúa de inmediato en caso de derrames o fugas.</li></ul></div>
+      <div class="rule-card stagger"><div class="rule-num">9</div><h4>No toques equipos eléctricos sin permiso</h4><ul><li>Solo personal autorizado puede intervenir.</li><li>Verifica corte, señalización y aislamiento.</li><li>Usa herramientas certificadas.</li></ul></div>
+      <div class="rule-card stagger" style="border-top-color:var(--naranja)"><div class="rule-num" style="background:var(--naranja)">10</div><h4>Si no es seguro, detente</h4><ul><li>Tienes derecho y deber de detener tareas peligrosas.</li><li>Reporta al supervisor o a HSEQ.</li><li>No reinicies hasta controlar el riesgo.</li></ul></div>
+    </div>
+    <div class="rules-footer stagger">Versión 1.0 – Reglas de Oro HSEQ | Actualizado: mayo 2025</div>
+  </section>
+
+  <!-- ════════ 6 — PERMISOS Y ATS ════════ -->
+  <section data-title="Permisos de Trabajo y ATS" aria-label="Sección 6: Permisos de Trabajo">
+    <div class="mascota"><img src="https://i.postimg.cc/Dz0qgn8x/Chat-GPT-Image-Jun-19-2025-09-30-26-AM.png" alt="" loading="lazy"></div>
+    <h2><span class="section-number">6</span>Permisos de Trabajo y ATS</h2>
+
+    <p class="stagger">En el Bloque Buenavista todo trabajo no rutinario debe contar con autorización previa mediante un <strong>Permiso de Trabajo</strong> y la elaboración de un <strong>Análisis de Trabajo Seguro (ATS)</strong>.</p>
+
+    <div class="card stagger">
+      <ul>
+        <li><strong>Permiso de trabajo:</strong> Documento obligatorio que establece las condiciones seguras antes de iniciar tareas con riesgo.</li>
+        <li><strong>ATS:</strong> Proceso en el que se identifican los peligros asociados a la actividad, se analizan los riesgos y se definen controles específicos.</li>
+        <li>Debe ser diligenciado y firmado por el responsable del área, el ejecutante del trabajo y validado por HSEQ si aplica.</li>
+        <li>Incluye revisión de EPP, herramientas, entorno, autorizaciones, condiciones de clima y estado de equipos.</li>
+      </ul>
+    </div>
+
+    <div class="nota-box stagger"><span class="nb-ico" style="color:var(--teal-medio)"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span><div>Todo visitante que desarrolle actividades deberá contar con el permiso correspondiente, incluso si se trata de acompañamiento u observación técnica.</div></div>
+  </section>
+
+  <!-- ════════ 7 — TAREAS ALTO RIESGO ════════ -->
+  <section data-title="Tareas de Alto Riesgo" aria-label="Sección 7: Tareas de Alto Riesgo">
+    <div class="mascota"><img src="https://i.postimg.cc/Dz0qgn8x/Chat-GPT-Image-Jun-19-2025-09-30-26-AM.png" alt="" loading="lazy"></div>
+    <h2><span class="section-number">7</span>Tareas de Alto Riesgo</h2>
+
+    <p class="stagger">Estas tareas se consideran críticas por su potencial de causar incidentes graves o fatales si no se gestionan con controles adecuados. Los siguientes son <strong>requisitos iniciales mínimos</strong>; sin embargo, pueden exigirse controles adicionales según la evaluación específica de riesgos, el procedimiento interno o condiciones del lugar de trabajo.</p>
+    <p class="stagger"><strong>Marco normativo de referencia:</strong> Decreto 1072 de 2015, Resolución 0312 de 2019, y normativas específicas según el tipo de tarea.</p>
+
+    <details class="stagger">
+      <summary><span class="summary-ico si-alto"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m18 10-2 4M6 4l4 16M14 4l-2 4"/><circle cx="9" cy="4" r="2"/></svg></span><span class="summary-text">Trabajo en alturas</span></summary>
+      <p>Requiere autorización formal y cumplimiento riguroso de estándares técnicos. Aplica para tareas realizadas desde 2 metros o más sobre el nivel inferior.</p>
+      <ul><li>Curso vigente de trabajo en alturas, según el rol desempeñado.</li><li>Uso de arnés certificado, líneas de vida y sistemas anticaídas.</li><li>Permiso de trabajo diligenciado y firmado.</li><li>Inspección del área, equipos y puntos de anclaje.</li></ul>
+      <div class="normativa-bar"><strong>Normativa:</strong> Resolución 4272 de 2021, NTC 1735, Decreto 1072 de 2015.</div>
+    </details>
+
+    <details class="stagger">
+      <summary><span class="summary-ico si-alto"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></span><span class="summary-text">Espacios confinados</span></summary>
+      <p>Aplica para tanques, ductos, cámaras u otras estructuras cerradas con acceso limitado. Se deben cumplir protocolos estrictos antes del ingreso.</p>
+      <ul><li>Evaluación previa y autorización por personal competente.</li><li>Medición de gases, ventilación mecánica y monitoreo continuo.</li><li>Plan de rescate activo y vigilancia externa permanente.</li><li>Permiso específico y señalización del área de trabajo.</li></ul>
+      <div class="normativa-bar"><strong>Normativa:</strong> Resolución 0491 de 2020, Guía Técnica GTC 220, Decreto 1072 de 2015.</div>
+    </details>
+
+    <details class="stagger">
+      <summary><span class="summary-ico si-alto"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg></span><span class="summary-text">Trabajos en caliente</span></summary>
+      <p>Incluye actividades que generan calor, chispas o llama abierta (soldadura, corte, esmerilado, etc.).</p>
+      <ul><li>Permiso de trabajo autorizado y análisis de atmósferas si aplica.</li><li>Presencia de extintores y materiales de control contra incendios.</li><li>Eliminación de materiales inflamables cercanos.</li><li>Vigilancia durante y después de la actividad.</li></ul>
+      <div class="normativa-bar"><strong>Normativa:</strong> NFPA 51B, Decreto 1072 de 2015.</div>
+    </details>
+
+    <details class="stagger">
+      <summary><span class="summary-ico si-alto"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M10 20v-6h4v6"/><path d="M3 21h18"/><path d="M5 21V8l7-5 7 5v13"/></svg></span><span class="summary-text">Izaje de cargas</span></summary>
+      <p>Requiere planeación técnica y supervisión. Aplica para uso de grúas, polipastos, plumas o maniobras de elevación.</p>
+      <ul><li>Inspección técnica de eslingas, ganchos y accesorios.</li><li>Evaluación del entorno y capacidad del equipo de izaje.</li><li>Presencia de señalero certificado con línea visual directa.</li><li>Zona demarcada y sin personal bajo la carga.</li></ul>
+      <div class="normativa-bar"><strong>Normativa:</strong> NTC 2769, ISO 23813, Decreto 1072 de 2015.</div>
+    </details>
+
+    <details class="stagger">
+      <summary><span class="summary-ico si-alto"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></span><span class="summary-text">Energías peligrosas (LOTO)</span></summary>
+      <p>Contempla tareas que implican contacto con fuentes de energía eléctrica, mecánica, hidráulica, neumática u otras.</p>
+      <ul><li>Identificación previa de todas las fuentes energizadas.</li><li>Aplicación efectiva del sistema LOTO (bloqueo y etiquetado).</li><li>Verificación de aislamiento completo antes de intervenir.</li><li>Capacitación específica y autorización del personal.</li></ul>
+      <div class="normativa-bar"><strong>Normativa:</strong> OSHA 1910.147, GTC 45, Decreto 1072 de 2015.</div>
+    </details>
+
+    <div class="nota-box stagger"><span class="nb-ico" style="color:var(--teal-medio)"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span><div>También se consideran tareas de alto riesgo: excavaciones profundas, demolición estructural, perforación mecánica, ingreso a zonas clasificadas, entre otras. Siempre consulta el procedimiento interno y coordina con el área HSEQ.</div></div>
+
+    <div class="game-container stagger">
+      <div class="game-title"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11V6a3 3 0 0 1 6 0v5"/><rect width="18" height="11" x="3" y="11" rx="2"/></svg>Trivia: ¿Requiere Permiso Especial?</div>
+      <p style="font-size:0.875rem; margin-bottom:14px; color:var(--texto-secondary);">Toca si la tarea es de rutina (solo ATS) o de alto riesgo (exige permiso de trabajo firmado).</p>
+      <div id="game2-item-text" class="game-item">Cargando...</div>
+      <div class="game-bins" id="game2-bins">
+        <div class="game-bin rutina" data-risk="rutina">Rutina (Solo ATS)</div>
+        <div class="game-bin permiso" data-risk="permiso">Alto Riesgo (Exige PT)</div>
+      </div>
+      <div id="game2-feedback" class="game-feedback"></div>
+    </div>
+  </section>
+
+  <!-- ════════ 8 — GESTIÓN AMBIENTAL ════════ -->
+  <section data-title="Gestión Ambiental" aria-label="Sección 8: Gestión Ambiental">
+    <div class="mascota"><img src="https://i.postimg.cc/Dz0qgn8x/Chat-GPT-Image-Jun-19-2025-09-30-26-AM.png" alt="" loading="lazy"></div>
+    <h2><span class="section-number">8</span>Gestión Ambiental</h2>
+
+    <p class="stagger">En Omega Energy Colombia adoptamos principios de sostenibilidad en todas las actividades. La correcta clasificación de residuos sigue este código de colores:</p>
+
+    <div class="residuo-grid">
+      <div class="residuo-card r-blanco stagger">
+        <div class="r-ico"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5"/><path d="M11 19h8.203a1.83 1.83 0 0 0 1.556-.89 1.784 1.784 0 0 0 0-1.775l-1.226-2.12"/><path d="m14 16-3 3 3 3"/><path d="M8.293 13.596 7.196 9.5 3.1 10.598"/><path d="m9.344 5.811 1.093-1.892A1.83 1.83 0 0 1 11.985 3a1.785 1.785 0 0 1 1.546.888l3.943 6.843"/><path d="m13.378 9.633 4.096 1.098 1.097-4.096"/></svg></div>
+        <h4>BLANCO · Aprovechables</h4>
+        <p>Papel, cartón, plástico, vidrio, metales.</p>
+      </div>
+      <div class="residuo-card r-verde stagger">
+        <div class="r-ico"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></svg></div>
+        <h4>VERDE · Orgánicos</h4>
+        <p>Restos de comida, cáscaras, residuos de jardinería.</p>
+      </div>
+      <div class="residuo-card r-negro stagger">
+        <div class="r-ico"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg></div>
+        <h4>NEGRO · No Aprovechables</h4>
+        <p>Papel higiénico, servilletas, icopor, residuos contaminados.</p>
+      </div>
+    </div>
+
+    <div class="game-container stagger">
+      <div class="game-title"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="12" x="3" y="6" rx="2"/><path d="M3 10h18"/><path d="M7 15h.01"/><path d="M11 15h2"/></svg>Trivia: ¿Dónde va este residuo?</div>
+      <p style="font-size:0.875rem; margin-bottom:14px; color:var(--texto-secondary);">Toca la caneca correcta para avanzar.</p>
+      <div id="game-item-text" class="game-item">Cargando...</div>
+      <div class="game-bins" id="game-bins">
+        <div class="game-bin blanco" data-bin="blanco">Blanco</div>
+        <div class="game-bin verde" data-bin="verde">Verde</div>
+        <div class="game-bin negro" data-bin="negro">Negro</div>
+      </div>
+      <div id="game-feedback" class="game-feedback"></div>
+    </div>
+
+    <div class="nota-box danger stagger"><span class="nb-ico"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg></span><div>No mezcles residuos y usa correctamente los puntos ecológicos asignados.</div></div>
+
+    <div class="nota-box stagger"><span class="nb-ico" style="color:var(--verde)"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5"/><path d="M11 19h8.203a1.83 1.83 0 0 0 1.556-.89 1.784 1.784 0 0 0 0-1.775l-1.226-2.12"/><path d="m14 16-3 3 3 3"/><path d="M8.293 13.596 7.196 9.5 3.1 10.598"/><path d="m9.344 5.811 1.093-1.892A1.83 1.83 0 0 1 11.985 3a1.785 1.785 0 0 1 1.546.888l3.943 6.843"/><path d="m13.378 9.633 4.096 1.098 1.097-4.096"/></svg></span><div>Recuerda: cada acción cuenta para proteger nuestro entorno y cumplir con la <strong>Resolución 2184 de 2019</strong>. La gestión adecuada de residuos contribuye directamente a la sostenibilidad y cumplimiento ambiental.</div></div>
+  </section>
+
+  <!-- ════════ 9 — PLAN DE EMERGENCIAS ════════ -->
+  <section data-title="Plan de Emergencias" aria-label="Sección 9: Plan de Emergencias">
+    <div class="mascota"><img src="https://i.postimg.cc/Dz0qgn8x/Chat-GPT-Image-Jun-19-2025-09-30-26-AM.png" alt="" loading="lazy"></div>
+    <h2><span class="section-number">9</span>Plan de Emergencias</h2>
+
+    <p class="stagger">El área cuenta con un sistema de emergencias que garantiza la respuesta oportuna ante cualquier evento:</p>
+
+    <ul class="emerg-list stagger">
+      <li><span class="emerg-ico"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg></span><div>Alarma sonora, sistema de aviso y activación rápida.</div></li>
+      <li><span class="emerg-ico"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg></span><div>Señalización y rutas de evacuación visibles.</div></li>
+      <li><span class="emerg-ico"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6.5c0 1.5-1 3-3 3s-3-1.5-3-3c0-1.5 1-3 1.5-3.5C11 2.5 12 2 12 2s1 .5 1.5 1c.5.5 1.5 2 1.5 3.5z"/><path d="M12 9.5V14"/><circle cx="12" cy="17" r="5"/></svg></span><div>Brigadistas capacitados y asignados por turno.</div></li>
+      <li><span class="emerg-ico"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span><div>Punto de encuentro por zona claramente identificado.</div></li>
+    </ul>
+
+    <h4 class="stagger" style="margin-top:20px;"><span class="h4-ico ico-rojo"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18v-6a5 5 0 1 1 10 0v6"/><path d="M5 21a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-1a1 1 0 0 0-1-1H6a1 1 0 0 0-1 1z"/><path d="M21 12h1M18.5 4.5 18 5M2 12h1M12 2v1"/></svg></span>En caso de emergencia:</h4>
+    <ul class="stagger" style="list-style:none; padding:0;">
+      <li style="display:flex; align-items:center; gap:8px; margin-bottom:6px;"><span class="li-check"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Mantén la calma.</li>
+      <li style="display:flex; align-items:center; gap:8px; margin-bottom:6px;"><span class="li-check"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Sigue instrucciones del brigadista.</li>
+      <li style="display:flex; align-items:center; gap:8px;"><span class="li-check"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Desplázate al punto de encuentro asignado.</li>
+    </ul>
+
+    <h3 class="stagger">Plano de evacuación</h3>
+    <p class="stagger">A continuación se presenta el plano de evacuación actualizado. Asegúrate de identificar la ubicación del punto de encuentro y las rutas de salida más cercanas.</p>
+    <div class="imagen-seccion stagger">
+      <img src="https://i.postimg.cc/hPKGFgpL/Plano-de-evacuacion-Corrales.png" alt="Plano de evacuación de las facilidades">
+    </div>
+  </section>
+
+  <!-- ════════ 10 — SISTEMAS DE ALARMA EN CAMPO ════════ -->
+  <section data-title="Sistemas de Alarma en Campo" aria-label="Sección 10: Sistemas de Alarma">
+    <div class="mascota"><img src="https://i.postimg.cc/Dz0qgn8x/Chat-GPT-Image-Jun-19-2025-09-30-26-AM.png" alt="" loading="lazy"></div>
+    <h2><span class="section-number">10</span>Sistemas de Alarma en Campo</h2>
+    <p class="stagger">Ante cualquier activación del sistema de alarma, actúa prontamente y con la mejor actitud. Tu reacción adecuada marca la diferencia. Estos son los códigos establecidos en el área:</p>
+
+    <div class="alarma-card stagger">
+      <span class="alarma-ico"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></span>
+      <div class="alarma-body">
+        <h4>1 pito corto (10–15 s): Dirígete al punto de encuentro</h4>
+        <p>Probable emergencia. Acude al punto de encuentro más cercano y espera instrucciones del coordinador de la emergencia.</p>
+      </div>
+    </div>
+
+    <div class="alarma-card danger stagger">
+      <span class="alarma-ico"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
+      <div class="alarma-body">
+        <h4>2 pitos largos: Presencia de gas</h4>
+        <p>Emergencia confirmada. Evacúa sin correr hacia la portería Corrales 1D o punto de encuentro de salida, usando las rutas de evacuación.</p>
+      </div>
+    </div>
+
+    <div class="alarma-card warn stagger">
+      <span class="alarma-ico"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M22.5 2a14 14 0 0 1 0 20"/></svg></span>
+      <div class="alarma-body">
+        <h4>3 pitos largos: Emergencia médica o ambiental</h4>
+        <p>Asiste el personal brigadista y operativo al sitio indicado. Mantente fuera del área y facilita la atención segura.</p>
+      </div>
+    </div>
+
+    <div class="nota-box alt stagger"><span class="nb-ico" style="color:var(--teal-claro)"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span><div>De tu reacción oportuna depende el éxito de la atención de emergencias.</div></div>
+  </section>
+
+  <!-- ════════ REPORTE DE ACCIDENTES ════════ -->
+  <section data-title="Reporte de Accidentes" aria-label="Sección: Reporte de Accidentes e Incidentes">
+    <div class="mascota"><img src="https://i.postimg.cc/Dz0qgn8x/Chat-GPT-Image-Jun-19-2025-09-30-26-AM.png" alt="" loading="lazy"></div>
+    <h2><span class="section-number">11</span>Reporte de Accidentes e Incidentes</h2>
+
+    <div class="reporte-banner stagger">
+      <span class="rb-ico"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg></span>
+      <div class="rb-text">
+        <strong>Todo evento debe reportarse — sin importar su magnitud</strong>
+        <span>Un casi-accidente de hoy puede ser el accidente grave de mañana. El reporte oportuno protege a todas las personas y activa los apoyos necesarios. Aplica para trabajadores directos, en misión, contratistas y visitantes.</span>
+      </div>
+    </div>
+
+    <h4 class="stagger" style="margin-bottom:14px; margin-top:20px;"><span class="h4-ico ico-naranja"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg></span>Primeros pasos ante cualquier evento</h4>
+
+    <div class="proceso-steps stagger">
+      <div class="paso-item">
+        <div class="paso-num" style="background:#dc2626; width:40px; height:40px; font-size:1rem;">1</div>
+        <div class="paso-body"><strong>Asegura la zona y atiende al lesionado</strong><span>Si hay persona lesionada, activa al brigadista de Primeros Auxilios. No muevas al lesionado salvo peligro inmediato. Llama a emergencias si la situación lo requiere.</span></div>
+      </div>
+      <div class="paso-item">
+        <div class="paso-num" style="background:#ea580c; width:40px; height:40px; font-size:1rem;">2</div>
+        <div class="paso-body"><strong>Notifica de inmediato según tu vía de reporte</strong><span>El canal cambia si eres trabajador directo o en misión de Omega, o si eres contratista/tercero. Identifica tu caso en las dos vías que se muestran abajo y actúa en consecuencia.</span></div>
+      </div>
+      <div class="paso-item">
+        <div class="paso-num" style="background:#00556b; width:40px; height:40px; font-size:1rem;">3</div>
+        <div class="paso-body"><strong>El equipo HSEQ de Omega gestiona la investigación</strong><span>HSEQ abre el reporte formal, coordina atención médica si aplica, asegura la escena y lidera la investigación del incidente o accidente.</span></div>
+      </div>
+      <div class="paso-item" style="padding-bottom:0;">
+        <div class="paso-num" style="background:#16a34a; width:40px; height:40px; font-size:1rem;">4</div>
+        <div class="paso-body"><strong>Preserva la escena y apoya la investigación</strong><span>No alteres el lugar del evento hasta que HSEQ lo autorice. Sé veraz y coopera con el proceso — el objetivo es prevenir, no sancionar.</span></div>
+      </div>
+    </div>
+
+    <h4 class="stagger" style="margin-top:24px; margin-bottom:12px;"><span class="h4-ico"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v6h6"/><path d="M21 12A9 9 0 0 0 6 5.3L3 8"/><path d="M21 22v-6h-6"/><path d="M3 12a9 9 0 0 0 15 6.7l3-2.7"/></svg></span>Vía de reporte según tu vinculación</h4>
+
+    <div class="via-grid">
+      <div class="via-card directo stagger">
+        <h4><span class="h4-ico"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Trabajadores directos y en misión</h4>
+        <ol>
+          <li>Informa de inmediato a tu <strong>supervisor o líder directo</strong>.</li>
+          <li>El supervisor reporta al <strong>equipo HSEQ de Omega</strong> dentro de los primeros <strong>30 minutos</strong>.</li>
+          <li>Si eres <strong>trabajador directo</strong>, HSEQ activa la atención con la <strong>ARL de Omega</strong>.</li>
+          <li>Si eres <strong>trabajador en misión</strong>, el reporte a la ARL lo realiza tu <strong>empresa temporal</strong> (tu empleador formal), que activa <strong>su propia ARL</strong>. Notifícale en paralelo.</li>
+          <li>En ambos casos, Omega lidera la investigación interna del evento. Acompaña el proceso y aporta la información requerida.</li>
+        </ol>
+      </div>
+      <div class="via-card tercero stagger">
+        <h4><span class="h4-ico ico-naranja"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span>Contratistas y terceros</h4>
+        <ol>
+          <li>Informa de inmediato al <strong>supervisor de tu empresa contratista</strong> y al <strong>supervisor de Omega</strong> que acompaña la actividad.</li>
+          <li>Tu empresa activa la atención con <strong>su propia ARL</strong> (la del contratista) y asume el reporte legal de su trabajador.</li>
+          <li>Notifica en paralelo al <strong>equipo HSEQ de Omega</strong> para la investigación conjunta en sitio.</li>
+          <li>Entrega a Omega la información y el reporte que solicite el procedimiento interno.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div style="margin-top:16px;" class="stagger">
+      <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-left:4px solid #16a34a; border-radius:var(--radio); padding:16px 18px; margin-bottom:10px;">
+        <h4 style="color:#166534; margin-bottom:8px;"><span style="display:inline-flex; vertical-align:-3px; margin-right:6px; color:#16a34a;"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="width:17px;height:17px"><path d="M21.801 10A10 10 0 1 1 17 3.335"/><path d="m9 11 3 3L22 4"/></svg></span>Recuerda siempre</h4>
+        <ul style="margin:0; font-size:0.88rem; color:#166534;">
+          <li>Reporta <strong>todo evento</strong>: accidente, incidente, casi-accidente o condición insegura.</li>
+          <li>El reporte temprano permite una respuesta más efectiva y protege tus derechos.</li>
+          <li>La investigación busca causas, no culpables.</li>
+        </ul>
+      </div>
+      <div style="background:#fef2f2; border:1px solid #fecaca; border-left:4px solid #dc2626; border-radius:var(--radio); padding:16px 18px;">
+        <h4 style="color:#dc2626; margin-bottom:8px;"><span style="display:inline-flex; vertical-align:-3px; margin-right:6px; color:#dc2626;"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="width:17px;height:17px"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg></span>No hagas esto</h4>
+        <ul style="margin:0; font-size:0.88rem; color:#991b1b;">
+          <li>No ocultes ni minimices el evento por temor a consecuencias.</li>
+          <li>No tomes decisiones de traslado médico sin consultar al supervisor y a HSEQ.</li>
+          <li>No alteres ni limpies la escena antes de que HSEQ lo autorice.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ 11 — TARJETAS DE APORTE ════════ -->
+  <section data-title="Tarjetas de Aporte" aria-label="Sección 11: Tarjetas de Aporte">
+    <div class="mascota"><img src="https://i.postimg.cc/Dz0qgn8x/Chat-GPT-Image-Jun-19-2025-09-30-26-AM.png" alt="" loading="lazy"></div>
+    <h2><span class="section-number">12</span>Tarjetas de Aporte</h2>
+
+    <p class="stagger">Las tarjetas de aporte son el medio oficial para reportar observaciones sobre seguridad, ambiente o calidad dentro de nuestras instalaciones. Son anónimas, rápidas y fáciles de diligenciar.</p>
+
+    <h4 class="stagger"><span class="h4-ico ico-naranja"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg></span>¿Qué puedes reportar?</h4>
+    <ul class="stagger">
+      <li>Condiciones o actos inseguros</li>
+      <li>Incidentes ambientales o riesgos operativos</li>
+      <li>Ideas de mejora o buenas prácticas</li>
+    </ul>
+
+    <div class="qr-box stagger">
+      <img src="https://i.postimg.cc/0Nhp4dDd/Captura-de-pantalla-2025-06-17-093430.png" alt="QR formulario tarjetas">
+    </div>
+
+    <p class="stagger" style="text-align:center; font-weight:600; color:var(--teal-medio);">Participar es cuidar de ti y de tu equipo. ¡Gracias por ser parte activa de nuestra cultura HSEQ!</p>
+  </section>
+
+  <!-- ════════ 12 — NORMAS DE COMPORTAMIENTO ════════ -->
+  <section data-title="Normas de Comportamiento" aria-label="Sección 12: Normas de Comportamiento">
+    <div class="mascota"><img src="https://i.postimg.cc/Dz0qgn8x/Chat-GPT-Image-Jun-19-2025-09-30-26-AM.png" alt="" loading="lazy"></div>
+    <h2><span class="section-number">13</span>Normas de Comportamiento Esperado</h2>
+
+    <p class="stagger">Durante tu permanencia en el Bloque Buenavista, se espera que mantengas un comportamiento seguro, respetuoso y coherente con nuestra cultura. Las siguientes normas son obligatorias:</p>
+
+    <div class="grid-2">
+      <div class="card stagger"><div class="card-ico"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></svg></div><h4>Respeto y cortesía</h4><p>Dirígete con amabilidad al personal y sigue siempre las indicaciones del personal autorizado.</p></div>
+      <div class="card stagger"><div class="card-ico"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7 2 2 0 0 1 1.72 2v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.42 19.42 0 0 1-3.33-2.67m-2.67-3.34a19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91"/><line x1="2" x2="22" y1="2" y2="22"/></svg></div><h4>Cero distracciones</h4><p>No uses celulares mientras te desplazas por zonas operativas o técnicas.</p></div>
+      <div class="card stagger"><div class="card-ico"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/><line x1="2" x2="22" y1="2" y2="22"/></svg></div><h4>Fotografías restringidas</h4><p>No tomes fotos o grabes videos sin autorización expresa del personal responsable.</p></div>
+      <div class="card stagger"><div class="card-ico"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2"/><path d="M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2"/><path d="M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg></div><h4>No manipules equipos</h4><p>Está prohibido tocar maquinaria, válvulas, botones o cualquier componente operativo.</p></div>
+      <div class="card stagger"><div class="card-ico"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></div><h4>Respeta las zonas autorizadas</h4><p>No te desvíes de las rutas señalizadas. Mantente siempre dentro de las áreas permitidas.</p></div>
+      <div class="card stagger"><div class="card-ico"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></div><h4>Reporta cualquier anomalía</h4><p>Si detectas una condición insegura, repórtala de inmediato a HSEQ o al personal en campo.</p></div>
+    </div>
+
+    <div class="nota-box warn stagger"><span class="nb-ico"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span><div>El incumplimiento de estas normas puede conllevar la suspensión del acceso o la cancelación de tu visita.</div></div>
+  </section>
+
+  <!-- ════════ 13 — SEGURIDAD VIAL ════════ -->
+  <section data-title="Seguridad Vial" aria-label="Sección 13: Seguridad Vial">
+    <div class="mascota"><img src="https://i.postimg.cc/Dz0qgn8x/Chat-GPT-Image-Jun-19-2025-09-30-26-AM.png" alt="" loading="lazy"></div>
+    <h2><span class="section-number">14</span>Seguridad Vial</h2>
+
+    <p class="stagger">La seguridad vial es parte de nuestra cultura preventiva. Cada acción cuenta para proteger la vida propia y la de los demás. Sigue estas normas mientras estés en nuestras instalaciones o en tránsito hacia ellas:</p>
+
+    <div class="grid-2">
+      <div class="card stagger"><div class="card-ico"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7 2 2 0 0 1 1.72 2v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.42 19.42 0 0 1-3.33-2.67m-2.67-3.34a19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91"/><line x1="2" x2="22" y1="2" y2="22"/></svg></div><h4>Sin distracciones</h4><p>No uses el celular mientras conduces ni durante desplazamientos a pie en zonas operativas.</p></div>
+      <div class="card stagger"><div class="card-ico"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><h4>Respeta los límites</h4><p>La velocidad máxima permitida es de <strong>10 km/h</strong> dentro del proyecto. Ajusta tu velocidad a las condiciones del entorno.</p></div>
+      <div class="card stagger"><div class="card-ico"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m8 8 8 8"/><path d="M16 8 8 16"/></svg></div><h4>Cinturón siempre</h4><p>Usa el cinturón de seguridad en todo momento, incluso para recorridos cortos dentro de la instalación.</p></div>
+      <div class="card stagger"><div class="card-ico"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></div><h4>Prioriza la vida</h4><p>Conduce de forma defensiva, cede el paso a peatones, y mantente alerta ante maniobras de vehículos pesados.</p></div>
+    </div>
+
+    <div class="nota-box stagger"><span class="nb-ico" style="color:var(--teal-medio)"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span><div>Recuerda: La seguridad vial empieza con tu actitud. Tu responsabilidad en la vía también protege a tus compañeros.</div></div>
+  </section>
+
+  <!-- ════════ 14 — RECOMENDACIONES FINALES (CHECKLIST) ════════ -->
+  <section id="checklist-section" data-title="Recomendaciones Finales" aria-label="Sección 14: Recomendaciones Finales">
+    <div class="mascota"><img src="https://i.postimg.cc/wBGR6r9M/Logo-OEC-Editado-2-1.png" alt="" loading="lazy"></div>
+    <h2><span class="section-number">15</span>Recomendaciones Finales Antes de Ingresar</h2>
+    <p class="stagger">Antes de iniciar tu ingreso, asegúrate de cumplir con los siguientes puntos:</p>
+
+    <ul class="checklist-list" role="group" aria-label="Lista de verificación obligatoria">
+      <li id="cli-0" class="stagger"><label><input type="checkbox" class="check-item"><span>Recibiste la charla de inducción completa.</span></label></li>
+      <li id="cli-1" class="stagger"><label><input type="checkbox" class="check-item"><span>Usas el EPP completo requerido para el área a visitar.</span></label></li>
+      <li id="cli-2" class="stagger"><label><input type="checkbox" class="check-item"><span>Conoces los puntos de encuentro y rutas de evacuación.</span></label></li>
+      <li id="cli-3" class="stagger"><label><input type="checkbox" class="check-item"><span>Entiendes las tareas de alto riesgo y sus restricciones.</span></label></li>
+      <li id="cli-4" class="stagger"><label><input type="checkbox" class="check-item"><span>No portar celular mientras estés en áreas operativas.</span></label></li>
+      <li id="cli-5" class="stagger"><label><input type="checkbox" class="check-item"><span>Cumples las normas de seguridad vial y comportamiento.</span></label></li>
+      <li id="cli-6" class="stagger"><label><input type="checkbox" class="check-item"><span>Tienes el Permiso de Trabajo o autorización, si aplica.</span></label></li>
+    </ul>
+
+    <div id="mensaje-alerta" aria-live="assertive"></div>
+
+    <div class="nota-box stagger" style="margin-top:16px;"><span class="nb-ico" style="color:var(--teal-medio)"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span><div><strong>Recuerda:</strong> Tu seguridad y la de todos depende de tu actitud y cumplimiento. ¡Gracias por contribuir a un entorno seguro!</div></div>
+  </section>
+
+  <!-- ════════ 15 — CIERRE ════════ -->
+  <section data-title="Cierre y Cultura Corporativa" aria-label="Sección 15: Cierre">
+    <div class="cierre-hero">
+      <span class="cierre-trophy"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></span>
+      <h2 style="border:none; padding:0; justify-content:center;">Cierre y Cultura Corporativa</h2>
+      <p>Gracias por completar esta inducción. Tu responsabilidad, coherencia y actitud hacen la diferencia. ¡Cuidémonos entre todos!</p>
+    </div>
+
+    <div class="video-card stagger">
+      <h4><span class="h4-ico"><svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg></span>Conoce más sobre nuestra cultura de seguridad</h4>
+      <p>Te invitamos a ver este video que refuerza los principios de seguridad industrial que promovemos en Omega Energy.</p>
+      <p style="text-align:center; margin-bottom:0;"><a href="https://drive.google.com/file/d/19cSoZqc8gUhy2XEqnV3DbHNDstnl9Yau/view?usp=sharing" target="_blank" rel="noopener">Ver video de seguridad industrial →</a></p>
+    </div>
+
+    <div style="text-align:center; padding:28px 0 10px;">
+      <p style="color:var(--texto-secondary); font-size:0.88rem; margin-bottom:18px;">Da clic en el siguiente botón para presentar tu evaluación:</p>
+      <a class="final-button" href="https://forms.gle/C5FgaKvszRVgXpUt8" target="_blank" rel="noopener">
+        <svg class="lc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;"><path d="M21.801 10A10 10 0 1 1 17 3.335"/><path d="m9 11 3 3L22 4"/></svg>
+        Presentar evaluación
+      </a>
+    </div>
+
+    <p style="text-align:center; font-size:0.72rem; color:var(--texto-muted); margin-top:28px; padding-top:16px; border-top:1px solid var(--borde); letter-spacing:0.03em;">
+      Inducción HSEQ · Bloque Buenavista — Omega Energy Colombia &nbsp;·&nbsp; Última actualización: junio de 2026
     </p>
-    <p style="font-size: 16px; color: #333;">
-      📌 La inducción es <strong>obligatoria y autónoma</strong>. Su aprobación es requisito previo para cualquier ingreso o actividad dentro de nuestras instalaciones.
-    </p>
-    <p style="font-size: 16px; color: #007BFF; font-weight: bold; text-align: center; margin-top: 25px;">
-      ¡Gracias por sumarte a un entorno más seguro, eficiente y sostenible! 🌱
-    </p>
-  </div>
-</section>
-<section>
-  <div class="img-superior-derecha">
-    <img src="https://i.postimg.cc/Dz0qgn8x/Chat-GPT-Image-Jun-19-2025-09-30-26-AM.png" alt="Personaje PBI con EPP">
-  </div>
-
-  <h2>2. OBJETIVO DE LA INDUCCIÓN</h2>
-
-  <div class="imagen-seccion">
-    <img src="https://i.postimg.cc/2SLNDkH3/2-DJI-0290.jpg" alt="Descripción de la imagen">
-  </div>
-
-  <p>Brindar a todo visitante o contratista las herramientas y conocimientos esenciales en materia de Seguridad, Salud, Ambiente y Calidad (HSEQ), garantizando la integridad de las personas, el entorno y la continuidad operativa.</p>
-</section>
-  <section>
-  <div class="img-superior-derecha">
-    <img src="https://i.postimg.cc/Dz0qgn8x/Chat-GPT-Image-Jun-19-2025-09-30-26-AM.png" alt="Personaje PBI con EPP">
-  </div>
-
-  <h2>3. POLÍTICAS CORPORATIVAS</h2>
-  <p>Estas son las políticas esenciales que rigen nuestro actuar diario en Omega:</p>
-
-  <details>
-    <summary>📌 Política Integral HSEQ</summary>
-    <p>Establece nuestro compromiso con la protección de la vida, la salud, el ambiente y la calidad en todos los procesos. Promueve la mejora continua, la prevención de incidentes y el cumplimiento de la normatividad aplicable. 👉 
-    <a href="https://drive.google.com/file/d/1omlq_CWbL5AbBuM-ZY2SnjlvBZGhbRRf/view?usp=sharing" target="_blank">Ver PDF</a></p>
-  </details>
-
-  <details>
-    <summary>🚫 Política de prevención SPA</summary>
-    <p>Fomenta ambientes seguros y saludables mediante acciones de promoción, prevención y acompañamiento, orientadas a reducir los riesgos asociados al uso de sustancias psicoactivas en contextos laborales. 👉 
-    <a href="https://drive.google.com/file/d/1yXcr2IgKqqtAsfnHfCK5cyJ_P6geaEti/view?usp=sharing" target="_blank">Ver PDF</a></p>
-  </details>
-
-  <details>
-    <summary>🚗 Política de seguridad vial</summary>
-    <p>Promueve una cultura de movilidad segura dentro y fuera de nuestras instalaciones, mediante la prevención de accidentes, el respeto a las normas de tránsito y la concientización sobre comportamientos responsables. 👉 
-    <a href="https://drive.google.com/file/d/1VyYUdSryrqoBhFA1MuAicZYog6pAOJpr/view?usp=sharing" target="_blank">Ver PDF</a></p>
-  </details>
-
-  <p>📌 Es tu responsabilidad conocerlas y aplicarlas en todo momento durante tu permanencia en nuestras instalaciones.</p>
-</section>
-  <section>
-  <div class="img-superior-derecha">
-    <img src="https://i.postimg.cc/Dz0qgn8x/Chat-GPT-Image-Jun-19-2025-09-30-26-AM.png" alt="Personaje PBI con EPP">
-  </div>
-
-  <h2>4. PELIGROS Y RIESGOS EN CAMPO</h2>
-<p>Durante tu visita podrías estar expuesto a diversos peligros operativos. A continuación, te presentamos los más representativos para este centro de trabajo:</p>
-
-<details>
-  <summary>⚡ Riesgo eléctrico</summary>
-  <p>Tableros y equipos energizados representan peligro de electrocución o arco eléctrico.</p>
-  <p><strong>✅ Medida preventiva:</strong> No toques ni te acerques a equipos eléctricos sin autorización expresa del área técnica.</p>
-</details>
-
-<details>
-  <summary>🧪 Riesgos químicos</summary>
-  <p>Exposición a combustibles, lubricantes, ácidos u otros productos que pueden causar quemaduras, intoxicación o reacciones.</p>
-  <p><strong>✅ Medida preventiva:</strong> Usa siempre el EPP suministrado (botas, gafas, guantes) y no manipules sustancias químicas.</p>
-</details>
-
-<details>
-  <summary>⚙️ Riesgos mecánicos</summary>
-  <p>Equipos rotativos, poleas, fajas y herramientas en operación pueden generar atrapamientos o golpes.</p>
-  <p><strong>✅ Medida preventiva:</strong> Mantente fuera del alcance de equipos en movimiento y respeta las zonas demarcadas.</p>
-</details>
-
-<details>
-  <summary>📉 Caídas a nivel</summary>
-  <p>Superficies húmedas, irregulares o con presencia de barro pueden causar tropiezos o resbalones.</p>
-  <p><strong>✅ Medida preventiva:</strong> Usa calzado adecaudo, camina con precaución y evita correr en zonas operativas.</p>
-</details>
-
-<details>
-  <summary>📤 Caídas desde altura</summary>
-  <p>Riesgo al acceder a escaleras, plataformas o estructuras.</p>
-  <p><strong>✅ Medida preventiva:</strong> No subas a lugares elevados sin autorización y sin los equipos de protección contra caídas.</p>
-</details>
-
-<details>
-  <summary>🔥 Áreas clasificadas</summary>
-  <p>Zonas con presencia de gases o vapores inflamables. Riesgo de explosión o incendio.</p>
-  <p><strong>✅ Medida preventiva:</strong> No ingreses a áreas señalizadas como peligrosas sin compañía ni autorización.</p>
-</details>
-
-<details>
-  <summary>🌡️ Temperaturas y presiones elevadas</summary>
-  <p>Contactos con equipos calientes o presurizados pueden causar quemaduras o accidentes por liberación de energía.</p>
-  <p><strong>✅ Medida preventiva:</strong> No toques válvulas, tuberías ni superficies metálicas; mantén distancia segura.</p>
-</details>
-
-<details>
-  <summary>⛈️ Tormentas eléctricas</summary>
-  <p>Riesgo de descargas eléctricas si se está al aire libre durante tormentas.</p>
-  <p><strong>✅ Medida preventiva:</strong> Suspende cualquier actividad a cielo abierto y refúgiate en zonas cubiertas y seguras.</p>
-</details>
-
-  <p>🧥 Ten presente que este centro de trabajo está ubicado a más de 2.600 metros sobre el nivel del mar, por lo que es importante protegerse del frío con ropa térmica adecuada y mantenerse hidratado durante la jornada.</p>
-  <p>📌 Además, pueden existir otros riesgos propios de la operación que serán comunicados durante tu ingreso. Sigue siempre las instrucciones del personal responsable o del área HSEQ.</p>
-</section>
-<section>
-  <div class="img-superior-derecha">
-    <img src="https://i.postimg.cc/Dz0qgn8x/Chat-GPT-Image-Jun-19-2025-09-30-26-AM.png" alt="Personaje PBI con EPP">
-  </div>
-
-  <h2>5. CONOCE NUESTRAS REGLAS DE ORO</h2>
-
-  <div style="font-family: 'Segoe UI', sans-serif; background-color: white; color: #002b45; font-size: 10.5px; padding: 0.5rem;">
-    <div style="text-align: center; margin-bottom: 20px;">
-      <img src="https://i.postimg.cc/bNZgDYD9/Copia-de-Logo-147-MPX.png" alt="Logo HSEQ" style="height: 50px; vertical-align: middle;">
-      <img src="https://i.postimg.cc/fRBGStH9/diez.png" alt="Escudo 10" style="height: 45px; vertical-align: middle;">
-      <span style="font-size: 20px; font-weight: bold; color: #00426c; vertical-align: middle; margin-left: 10px;">Reglas de Oro – Compromiso con la Vida</span>
-    </div>
-
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px;">
-
-      <!-- Regla 1 -->
-      <div style="background-color: #f4f8fb; border-left: 5px solid #00426c; padding: 10px; border-radius: 8px;">
-        <h4>1️⃣ Antes de empezar, revisa y planifica</h4>
-        <ul>
-          <li>Obtén el permiso de trabajo antes de iniciar.</li>
-          <li>Realiza el ATS con tu equipo, incluso en tareas rutinarias.</li>
-          <li>Verifica que exista el procedimiento PON y anexos requeridos.</li>
-        </ul>
-      </div>
-
-      <!-- Regla 2 -->
-      <div style="background-color: #f4f8fb; border-left: 5px solid #00426c; padding: 10px; border-radius: 8px;">
-        <h4>2️⃣ Aísla bien las energías peligrosas</h4>
-        <ul>
-          <li>Bloquea, etiqueta y aísla todas las fuentes de energía antes de intervenir.</li>
-          <li>Incluye eléctricas, térmicas, neumáticas y partes móviles.</li>
-          <li>No retires bloqueos sin autorización.</li>
-        </ul>
-      </div>
-
-      <!-- Regla 3 -->
-      <div style="background-color: #f4f8fb; border-left: 5px solid #00426c; padding: 10px; border-radius: 8px;">
-        <h4>3️⃣ Cuidado con trabajos en caliente</h4>
-        <ul>
-          <li>Verifica el permiso y el monitoreo de gases.</li>
-          <li>Ten extintores disponibles y listos para usar.</li>
-          <li>Retira materiales inflamables del área.</li>
-        </ul>
-      </div>
-
-      <!-- Regla 4 -->
-      <div style="background-color: #f4f8fb; border-left: 5px solid #00426c; padding: 10px; border-radius: 8px;">
-        <h4>4️⃣ Con cargas, no te la juegues</h4>
-        <ul>
-          <li>Revisa eslingas, ganchos y estado de la carga.</li>
-          <li>Nunca estés bajo una carga suspendida.</li>
-          <li>Mantén comunicación clara con el operador.</li>
-        </ul>
-      </div>
-
-      <!-- Regla 5 -->
-      <div style="background-color: #f4f8fb; border-left: 5px solid #00426c; padding: 10px; border-radius: 8px;">
-        <h4>5️⃣ Protégete al trabajar en altura</h4>
-        <ul>
-          <li>Usa arnés y puntos de anclaje certificados.</li>
-          <li>Asegura herramientas y materiales.</li>
-          <li>Verifica tu equipo antes de usarlo.</li>
-        </ul>
-      </div>
-
-      <!-- Regla 6 -->
-      <div style="background-color: #f4f8fb; border-left: 5px solid #00426c; padding: 10px; border-radius: 8px;">
-        <h4>6️⃣ Conduce con responsabilidad</h4>
-        <ul>
-          <li>Usa el cinturón de seguridad siempre.</li>
-          <li>No uses el celular ni manejes fatigado.</li>
-          <li>Respeta los límites de velocidad.</li>
-        </ul>
-      </div>
-
-      <!-- Regla 7 -->
-      <div style="background-color: #f4f8fb; border-left: 5px solid #00426c; padding: 10px; border-radius: 8px;">
-        <h4>7️⃣ Usa siempre tu EPP</h4>
-        <ul>
-          <li>Selecciona el EPP adecuado según la tarea.</li>
-          <li>Verifica que esté en buen estado antes de usarlo.</li>
-          <li>Aplica siempre, incluso en tareas cortas o rutinarias.</li>
-        </ul>
-      </div>
-
-      <!-- Regla 8 -->
-      <div style="background-color: #f4f8fb; border-left: 5px solid #00426c; padding: 10px; border-radius: 8px;">
-        <h4>8️⃣ Maneja correctamente sustancias peligrosas</h4>
-        <ul>
-          <li>Etiqueta los productos correctamente.</li>
-          <li>Consulta la hoja de seguridad antes de usarlos.</li>
-          <li>Actúa de inmediato en caso de derrames o fugas.</li>
-        </ul>
-      </div>
-
-      <!-- Regla 9 -->
-      <div style="background-color: #f4f8fb; border-left: 5px solid #00426c; padding: 10px; border-radius: 8px;">
-        <h4>9️⃣ No toques equipos eléctricos sin permiso</h4>
-        <ul>
-          <li>Solo personal autorizado puede intervenir.</li>
-          <li>Verifica corte, señalización y aislamiento.</li>
-          <li>Usa herramientas certificadas.</li>
-        </ul>
-      </div>
-
-      <!-- Regla 10 -->
-      <div style="background-color: #f4f8fb; border-left: 5px solid #00426c; padding: 10px; border-radius: 8px;">
-        <h4>🔟 Si no es seguro, detente</h4>
-        <ul>
-          <li>Tienes derecho y deber de detener tareas peligrosas.</li>
-          <li>Reporta al supervisor o a HSEQ.</li>
-          <li>No reinicies hasta controlar el riesgo.</li>
-        </ul>
-      </div>
-
-    </div>
-
-    <div style="text-align: right; font-size: 0.75em; color: #888; margin-top: 20px;">
-      Versión 1.0 – Reglas de Oro HSEQ | Actualizado: mayo 2025
-    </div>
-  </div>
-</section>
-<section>
-  <div class="img-superior-derecha">
-    <img src="https://i.postimg.cc/Dz0qgn8x/Chat-GPT-Image-Jun-19-2025-09-30-26-AM.png" alt="Personaje PBI con EPP">
-  </div>
-
-  <h2>6. PERMISOS DE TRABAJO Y ATS</h2>
-
-  <p>📝 En el Bloque Buenavista todo trabajo no rutinario debe contar con autorización previa mediante un <strong>Permiso de Trabajo</strong> y la elaboración de un <strong>Análisis de Trabajo Seguro (ATS)</strong>.</p>
-
-  <div class="card">
-    <ul>
-      <li><strong>Permiso de trabajo:</strong> Documento obligatorio que establece las condiciones seguras antes de iniciar tareas con riesgo.</li>
-      <li><strong>ATS:</strong> Proceso en el que se identifican los peligros asociados a la actividad, se analizan los riesgos y se definen controles específicos.</li>
-      <li>Debe ser diligenciado y firmado por el responsable del área, el ejecutante del trabajo y validado por HSEQ si aplica.</li>
-      <li>Incluye revisión de EPP, herramientas, entorno, autorizaciones, condiciones de clima y estado de equipos.</li>
-    </ul>
-  </div>
-
-  <p>📌 Todo visitante que desarrolle actividades deberá contar con el permiso correspondiente, incluso si se trata de acompañamiento u observación técnica.</p>
-</section>
-<section>
-  <div class="img-superior-derecha">
-    <img src="https://i.postimg.cc/Dz0qgn8x/Chat-GPT-Image-Jun-19-2025-09-30-26-AM.png" alt="Personaje PBI con EPP">
-  </div>
-
-  <h2>7. TAREAS DE ALTO RIESGO</h2>
-
-  <p>Estas tareas se consideran críticas por su potencial de causar incidentes graves o fatales si no se gestionan con controles adecuados. Los siguientes son <strong>requisitos iniciales mínimos</strong>; sin embargo, pueden exigirse controles adicionales según la evaluación específica de riesgos, el procedimiento interno o condiciones del lugar de trabajo.</p>
-
-  <p><strong>Marco normativo de referencia:</strong> Decreto 1072 de 2015, Resolución 0312 de 2019, y normativas específicas según el tipo de tarea.</p>
-
-  <details>
-    <summary>🧗‍♂️ Trabajo en alturas</summary>
-    <p>Requiere autorización formal y cumplimiento riguroso de estándares técnicos. Aplica para tareas realizadas desde 2 metros o más sobre el nivel inferior.</p>
-    <ul>
-      <li>Curso vigente de trabajo en alturas, según el rol desempeñado.</li>
-      <li>Uso de arnés certificado, líneas de vida y sistemas anticaídas.</li>
-      <li>Permiso de trabajo diligenciado y firmado.</li>
-      <li>Inspección del área, equipos y puntos de anclaje.</li>
-    </ul>
-    <p><strong>Normativa:</strong> Resolución 4272 de 2021, NTC 1735, Decreto 1072 de 2015.</p>
-  </details>
-
-  <details>
-    <summary>🚧 Espacios confinados</summary>
-    <p>Aplica para tanques, ductos, cámaras u otras estructuras cerradas con acceso limitado. Se deben cumplir protocolos estrictos antes del ingreso.</p>
-    <ul>
-      <li>Evaluación previa y autorización por personal competente.</li>
-      <li>Medición de gases, ventilación mecánica y monitoreo continuo.</li>
-      <li>Plan de rescate activo y vigilancia externa permanente.</li>
-      <li>Permiso específico y señalización del área de trabajo.</li>
-    </ul>
-    <p><strong>Normativa:</strong> Resolución 0491 de 2020, Guía Técnica GTC 220, Decreto 1072 de 2015.</p>
-  </details>
-
-  <details>
-    <summary>🔥 Trabajos en caliente</summary>
-    <p>Incluye actividades que generan calor, chispas o llama abierta (soldadura, corte, esmerilado, etc.).</p>
-    <ul>
-      <li>Permiso de trabajo autorizado y análisis de atmósferas si aplica.</li>
-      <li>Presencia de extintores y materiales de control contra incendios.</li>
-      <li>Eliminación de materiales inflamables cercanos.</li>
-      <li>Vigilancia durante y después de la actividad.</li>
-    </ul>
-    <p><strong>Normativa:</strong> NFPA 51B, Decreto 1072 de 2015.</p>
-  </details>
-
-  <details>
-    <summary>🏗️ Izaje de cargas</summary>
-    <p>Requiere planeación técnica y supervisión. Aplica para uso de grúas, polipastos, plumas o maniobras de elevación.</p>
-    <ul>
-      <li>Inspección técnica de eslingas, ganchos y accesorios.</li>
-      <li>Evaluación del entorno y capacidad del equipo de izaje.</li>
-      <li>Presencia de señalero certificado con línea visual directa.</li>
-      <li>Zona demarcada y sin personal bajo la carga.</li>
-    </ul>
-    <p><strong>Normativa:</strong> NTC 2769, ISO 23813, Decreto 1072 de 2015.</p>
-  </details>
-
-  <details>
-    <summary>⚠️ Energías peligrosas (LOTO)</summary>
-    <p>Contempla tareas que implican contacto con fuentes de energía eléctrica, mecánica, hidráulica, neumática u otras.</p>
-    <ul>
-      <li>Identificación previa de todas las fuentes energizadas.</li>
-      <li>Aplicación efectiva del sistema LOTO (bloqueo y etiquetado).</li>
-      <li>Verificación de aislamiento completo antes de intervenir.</li>
-      <li>Capacitación específica y autorización del personal.</li>
-    </ul>
-    <p><strong>Normativa:</strong> OSHA 1910.147, GTC 45, Decreto 1072 de 2015.</p>
-  </details>
-
-  <p>📌 También se consideran tareas de alto riesgo: excavaciones profundas, demolición estructural, perforación mecánica, ingreso a zonas clasificadas, entre otras. Siempre consulta el procedimiento interno y coordina con el área HSEQ.</p>
-</section>
-<section>
-  <div class="img-superior-derecha">
-    <img src="https://i.postimg.cc/Dz0qgn8x/Chat-GPT-Image-Jun-19-2025-09-30-26-AM.png" alt="Personaje PBI con EPP">
-  </div>
-
-  <h2>8. GESTIÓN AMBIENTAL</h2>
-
- <p>🌱 En Omega Energy Colombia adoptamos principios de sostenibilidad en todas las actividades. Estas son nuestras reglas ambientales básicas:</p>
-<ul>
-  <li><span style="display:inline-block;width:14px;height:14px;background:#ffffff;border:1px solid #999;border-radius:50%;margin-right:8px;vertical-align:middle;"></span> Deposita los residuos <strong>aprovechables</strong> (papel, cartón, plástico, vidrio, metales) en el contenedor <strong>blanco</strong>.</li>
-  
-  <li><span style="display:inline-block;width:14px;height:14px;background:#28a745;border-radius:50%;margin-right:8px;vertical-align:middle;"></span> Los residuos <strong>orgánicos</strong> (restos de comida, cáscaras, residuos de jardinería) deben ir en el contenedor <strong>verde</strong>.</li>
-  
-  <li><span style="display:inline-block;width:14px;height:14px;background:#000000;border-radius:50%;margin-right:8px;vertical-align:middle;"></span> Los residuos <strong>no aprovechables</strong> (papel higiénico, servilletas, icopor, residuos contaminados) van en el contenedor <strong>negro</strong>.</li>
-</ul>
-<p>🚨 No mezcles residuos y usa correctamente los puntos ecológicos asignados.</p>
-<p>🔁 Recuerda: cada acción cuenta para proteger nuestro entorno y cumplir con la <strong>Resolución 2184 de 2019</strong>.</p>
-
- <p style="margin-top: 20px;">♻️ <strong>Cada acción cuenta.</strong> La gestión adecuada de residuos contribuye directamente a la sostenibilidad y cumplimiento ambiental.</p>
-</section>
-<section>
-  <div class="img-superior-derecha">
-    <img src="https://i.postimg.cc/Dz0qgn8x/Chat-GPT-Image-Jun-19-2025-09-30-26-AM.png" alt="Personaje PBI con EPP">
-  </div>
-
-  <h2>9. PLAN DE EMERGENCIAS</h2>
-
-  <p>El área cuenta con un sistema de emergencias que garantiza la respuesta oportuna ante cualquier evento:</p>
-
-  <ul>
-    <li>📢 Alarma sonora, sistema de aviso y activación rápida.</li>
-    <li>🚩 Señalización y rutas de evacuación visibles.</li>
-    <li>🧯 Brigadistas capacitados y asignados por turno.</li>
-    <li>📍 Punto de encuentro por zona claramente identificado.</li>
-  </ul>
-
-  <p>📌 En caso de emergencia:</p>
-
-  <ul>
-    <li>✅ Mantén la calma.</li>
-    <li>✅ Sigue instrucciones del brigadista.</li>
-    <li>✅ Desplázate al punto de encuentro asignado.</li>
-  </ul>
-<div class="seccion-contenido">
-  <h3>🗺️ Plano de evacuación </h3>
-  <p>A continuación se presenta el plano de evacuación actualizado. Asegúrate de identificar la ubicación del punto de encuentro y las rutas de salida más cercanas.</p>
-  <div class="imagen-seccion">
-    <img src="https://i.postimg.cc/hPKGFgpL/Plano-de-evacuacion-Corrales.png" alt="Plano de evacuación de las facilidades">
-  </div>
-</div>
-</section>
-  <section>
-  <div class="img-superior-derecha">
-    <img src="https://i.postimg.cc/Dz0qgn8x/Chat-GPT-Image-Jun-19-2025-09-30-26-AM.png" alt="Personaje PBI con EPP">
-  </div>
-  <h2>🚨 11. SISTEMAS DE ALARMA EN CAMPO</h2>
-  <p>Ante cualquier activación del sistema de alarma, actúa prontamente y con la mejor actitud. Tu reacción adecuada marca la diferencia. Estos son los códigos establecidos en el área:</p>
-
-  <div class="card">
-    <h4>🔊 <strong>1 pito corto (10–15 s): Dirígete al punto de encuentro</strong></h4>
-    <p>Probable emergencia. Acude al punto de encuentro más cercano y espera instrucciones del coordinador de la emergencia.</p>
-  </div>
-
-  <div class="card">
-    <h4>🔊🔊 <strong>2 pitos largos: Presencia de gas</strong></h4>
-    <p>Emergencia confirmada. Evacúa sin correr hacia la portería Corrales 1D o punto de encuentro de salida, usando las rutas de evacuación.</p>
-  </div>
-
-  <div class="card">
-    <h4>🔊🔊🔊 <strong>3 pitos largos: Emergencia médica o ambiental</strong></h4>
-    <p>Asiste el personal brigadista y operativo al sitio indicado. Mantente fuera del área y facilita la atención segura.</p>
-  </div>
-
-  <p style="margin-top: 20px; font-style: italic; color: #00426c;">
-    👉 De tu reacción oportuna depende el éxito de la atención de emergencias.
-  </p>
-</section>
-
- <section>
-  <div class="img-superior-derecha">
-    <img src="https://i.postimg.cc/Dz0qgn8x/Chat-GPT-Image-Jun-19-2025-09-30-26-AM.png" alt="Personaje PBI con EPP">
-  </div>
-
-  <h2>12. TARJETAS DE APORTE</h2>
-
-  <p>Las tarjetas de aporte son el medio oficial para reportar observaciones sobre seguridad, ambiente o calidad dentro de nuestras instalaciones. Son anónimas, rápidas y fáciles de diligenciar.</p>
-
-  <p>🚀 ¿Qué puedes reportar?</p>
-
-  <ul>
-    <li>Condiciones o actos inseguros</li>
-    <li>Incidentes ambientales o riesgos operativos</li>
-    <li>Ideas de mejora o buenas prácticas</li>
-  </ul>
-
-  <img class="qr" src="https://i.postimg.cc/0Nhp4dDd/Captura-de-pantalla-2025-06-17-093430.png" alt="QR formulario tarjetas">
-
-  <p style="text-align:center; font-weight:bold;">
-    Participar es cuidar de ti y de tu equipo. 💬 ¡Gracias por ser parte activa de nuestra cultura HSEQ!
-  </p>
-</section>
-  
-<section>
-  <div class="img-superior-derecha">
-    <img src="https://i.postimg.cc/Dz0qgn8x/Chat-GPT-Image-Jun-19-2025-09-30-26-AM.png" alt="Personaje PBI con EPP">
-  </div>
-
-  <h2>13. NORMAS DE COMPORTAMIENTO ESPERADO</h2>
-
-  <p>Durante tu visita al Bloque Buenavista, se espera que mantengas un comportamiento seguro, respetuoso y coherente con nuestra cultura. Las siguientes normas son obligatorias:</p>
-
-  <div class="comportamiento-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-
-    <div class="card">
-      <h4>🤝 Respeto y cortesía</h4>
-      <p>Dirígete con amabilidad al personal y sigue siempre las indicaciones del personal autorizado.</p>
-    </div>
-
-    <div class="card">
-      <h4>🚫 Cero distracciones</h4>
-      <p>No uses celulares mientras te desplazas por zonas operativas o técnicas.</p>
-    </div>
-
-    <div class="card">
-      <h4>📸 Fotografías restringidas</h4>
-      <p>No tomes fotos o grabes videos sin autorización expresa del personal responsable.</p>
-    </div>
-
-    <div class="card">
-      <h4>🛑 No manipules equipos</h4>
-      <p>Está prohibido tocar maquinaria, válvulas, botones o cualquier componente operativo.</p>
-    </div>
-
-    <div class="card">
-      <h4>📍 Respeta las zonas autorizadas</h4>
-      <p>No te desvíes de las rutas señalizadas. Mantente siempre dentro de las áreas permitidas.</p>
-    </div>
-
-    <div class="card">
-      <h4>💬 Reporta cualquier anomalía</h4>
-      <p>Si detectas una condición insegura, repórtala de inmediato a HSEQ o al personal en campo.</p>
-    </div>
-
-  </div>
-
-  <p style="margin-top: 20px;">📌 El incumplimiento de estas normas puede conllevar la suspensión del acceso o la cancelación de tu visita.</p>
-</section>
-<section>
-  <div class="img-superior-derecha">
-    <img src="https://i.postimg.cc/Dz0qgn8x/Chat-GPT-Image-Jun-19-2025-09-30-26-AM.png" alt="Personaje PBI con EPP">
-  </div>
-
-  <h2>14. SEGURIDAD VIAL</h2>
-
-  <p>🚘 La seguridad vial es parte de nuestra cultura preventiva. Cada acción cuenta para proteger la vida propia y la de los demás. Sigue estas normas mientras estés en nuestras instalaciones o en tránsito hacia ellas:</p>
-
-  <div class="vial-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-
-    <div class="card">
-      <h4>📵 Sin distracciones</h4>
-      <p>No uses el celular mientras conduces ni durante desplazamientos a pie en zonas operativas.</p>
-    </div>
-
-    <div class="card">
-      <h4>⏱ Respeta los límites</h4>
-      <p>La velocidad máxima permitida es de <strong>10 km/h</strong> dentro del proyecto. Ajusta tu velocidad a las condiciones del entorno.</p>
-    </div>
-
-    <div class="card">
-      <h4>✅ Cinturón siempre</h4>
-      <p>Usa el cinturón de seguridad en todo momento, incluso para recorridos cortos dentro de la instalación.</p>
-    </div>
-
-    <div class="card">
-      <h4>🔁 Prioriza la vida</h4>
-      <p>Conduce de forma defensiva, cede el paso a peatones, y mantente alerta ante maniobras de vehículos pesados.</p>
-    </div>
-
-  </div>
-
-  <p style="margin-top: 20px;">📌 Recuerda: La seguridad vial empieza con tu actitud. Tu responsabilidad en la vía también protege a tus compañeros.</p>
-</section>
-  <section>
-  <div class="img-superior-derecha">
-    <img src="https://i.postimg.cc/Dz0qgn8x/Chat-GPT-Image-Jun-19-2025-09-30-26-AM.png" alt="Personaje PBI con EPP">
-  </div>
-
-  <h2>🧾 15. RECOMENDACIONES FINALES ANTES DE INGRESAR</h2>
-  <p>Antes de iniciar tu visita, asegúrate de cumplir con los siguientes puntos:</p>
-
-  <ul style="list-style: none; padding-left: 0;">
-    <li><label><input type="checkbox" /> ✅ Recibiste la charla de inducción completa.</label></li>
-    <li><label><input type="checkbox" /> ✅ Usas el EPP completo requerido para el área a visitar.</label></li>
-    <li><label><input type="checkbox" /> ✅ Conoces los puntos de encuentro y rutas de evacuación.</label></li>
-    <li><label><input type="checkbox" /> ✅ Entiendes las tareas de alto riesgo y sus restricciones.</label></li>
-    <li><label><input type="checkbox" /> ✅ No portar celular mientras estés en áreas operativas.</label></li>
-    <li><label><input type="checkbox" /> ✅ Cumples las normas de seguridad vial y comportamiento.</label></li>
-    <li><label><input type="checkbox" /> ✅ Tienes el Permiso de Trabajo o autorización, si aplica.</label></li>
-  </ul>
-
-  <p style="margin-top: 20px;"><strong>📌 Recuerda:</strong> Tu seguridad y la de todos depende de tu actitud y cumplimiento. ¡Gracias por contribuir a un entorno seguro! 🙌</p>
-</section>
-<section>
-  <div class="img-superior-derecha">
-    <img src="https://i.postimg.cc/Dz0qgn8x/Chat-GPT-Image-Jun-19-2025-09-30-26-AM.png" alt="Personaje PBI con EPP">
-  </div>
-<h2>16. CIERRE Y CULTURA CORPORATIVA</h2>
-
-<p>🎯 Gracias por completar esta inducción. Tu responsabilidad, coherencia y actitud hacen la diferencia. ¡Cuidémonos entre todos!</p>
-
-<div style="margin-top: 20px; border: 1px solid #ccc; padding: 20px; border-radius: 10px;">
-  <h4>🎥 Conoce más sobre nuestra cultura de seguridad</h4>
-  <p>Te invitamos a ver este video que refuerza los principios de seguridad industrial que promovemos en Omega Energy.</p>
-  <p style="text-align: center;">
-    <a href="https://drive.google.com/file/d/19cSoZqc8gUhy2XEqnV3DbHNDstnl9Yau/view?usp=sharing" target="_blank">
-      🔗 Ver video de seguridad industrial
-    </a>
-  </p>
-</div>
-
-<p style="margin-top: 30px;"><strong>👉 Da clic en el siguiente botón para presentar tu evaluación:</strong></p>
-
-<p style="text-align:center;">
-  <a class="final-button" href="https://forms.gle/C5FgaKvszRVgXpUt8" target="_blank"
-     style="display:inline-block; padding: 12px 24px; background-color:#28a745; color:white; font-weight:bold; border-radius:6px; text-decoration:none; box-shadow:0 2px 5px rgba(0,0,0,0.2); transition: background-color 0.3s ease;">
-     ✅ Presentar evaluación
-  </a>
-</p>
-</section>
-</div> <!-- Cierre correcto de .container -->
-
-<div class="nav-buttons">
-  <button id="btnAnterior" onclick="prevSection()">Anterior</button>
-  <button id="btnSiguiente" onclick="nextSection()">Siguiente</button>
-</div>
+  </section>
+
+  <div class="swipe-hint" id="swipeHint">Desliza para navegar →</div>
+  <nav class="nav-buttons" aria-label="Navegación entre secciones">
+    <button class="nav-btn nav-btn-prev" id="btnAnterior" aria-label="Ir a sección anterior">← Anterior</button>
+    <div class="nav-step-counter" id="stepCounter" aria-live="polite">Sección 1 de 16</div>
+    <button class="nav-btn" id="btnSiguiente" aria-label="Ir a siguiente sección">Siguiente →</button>
+  </nav>
+
+</main>
 
 <script>
+(function() {
+  'use strict';
   let current = 0;
-  const sections = document.querySelectorAll("section");
-  const btnAnterior = document.getElementById("btnAnterior");
-  const btnSiguiente = document.getElementById("btnSiguiente");
+  const visited = new Set([0]);
+
+  // ═══ MOTOR DE AUDIO ═══
+  const AudioEngine = {
+    ctx: null, enabled: true,
+    init() { if (this.ctx) return; try { this.ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) { this.enabled = false; } },
+    play(type) {
+      if (!this.enabled || !this.ctx) return;
+      if (this.ctx.state === 'suspended') this.ctx.resume();
+      switch(type) {
+        case 'next':     this._t([520, 680], 0.06, 'sine', 0.12); break;
+        case 'prev':     this._t([480, 380], 0.05, 'sine', 0.1); break;
+        case 'check':    this._t([600, 800], 0.04, 'sine', 0.08); break;
+        case 'complete': this._c([523, 659, 784, 1047], 0.08, 0.35); break;
+        case 'error':    this._t([300, 200], 0.06, 'square', 0.15); break;
+        case 'open':     this._t([440, 550], 0.03, 'sine', 0.06); break;
+      }
+    },
+    _t(freqs, vol, wave, dur) {
+      const now = this.ctx.currentTime; const g = this.ctx.createGain(); g.connect(this.ctx.destination);
+      g.gain.setValueAtTime(vol, now); g.gain.exponentialRampToValueAtTime(0.001, now + dur);
+      freqs.forEach((f, i) => { const o = this.ctx.createOscillator(); o.type = wave; o.frequency.setValueAtTime(f, now + i * dur * 0.4); o.connect(g); o.start(now + i * dur * 0.35); o.stop(now + dur + 0.05); });
+    },
+    _c(freqs, vol, dur) {
+      const now = this.ctx.currentTime;
+      freqs.forEach((f, i) => { const o = this.ctx.createOscillator(); const g = this.ctx.createGain(); o.type = 'sine'; o.frequency.setValueAtTime(f, now); g.gain.setValueAtTime(0, now); g.gain.linearRampToValueAtTime(vol, now + 0.04 + i * 0.03); g.gain.exponentialRampToValueAtTime(0.001, now + dur); o.connect(g); g.connect(this.ctx.destination); o.start(now + i * 0.04); o.stop(now + dur + 0.1); });
+    }
+  };
+  document.addEventListener('click', () => AudioEngine.init(), { once: true });
+  document.addEventListener('touchstart', () => AudioEngine.init(), { once: true });
+
+  const sections = document.querySelectorAll('section');
+  const btnAnterior = document.getElementById('btnAnterior');
+  const btnSiguiente = document.getElementById('btnSiguiente');
+  const barraProgreso = document.getElementById('barraProgreso');
+  const progressPct = document.getElementById('progressPct');
+  const checklistSection = document.getElementById('checklist-section');
+  const headerBadge = document.getElementById('headerBadge');
+  const headerSectionName = document.getElementById('headerSectionName');
+  const stepCounter = document.getElementById('stepCounter');
+  const navDotsContainer = document.getElementById('navDots');
+  const liveAnnouncer = document.getElementById('liveAnnouncer');
+  const mainContainer = document.getElementById('mainContainer');
+  const swipeHint = document.getElementById('swipeHint');
+
+  sections.forEach((sec, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+    const title = sec.dataset.title || ('Sección ' + (i + 1));
+    dot.setAttribute('aria-label', title); dot.title = title;
+    dot.onclick = () => goTo(i);
+    navDotsContainer.appendChild(dot);
+  });
+
+  // ═══ JUEGO 1: RESIDUOS ═══
+  const wasteItems = [
+    { text: "Botella de plástico limpia", bin: "blanco" },
+    { text: "Servilleta usada", bin: "negro" },
+    { text: "Cáscara de fruta", bin: "verde" },
+    { text: "Cartón de empaque", bin: "blanco" }
+  ];
+  let gIdx = 0;
+  function initGame1() { gIdx = 0; updateGame1(); }
+  function updateGame1() {
+    const it = document.getElementById("game-item-text"), bins = document.getElementById("game-bins"), fb = document.getElementById("game-feedback");
+    if (!it) return;
+    if (gIdx >= wasteItems.length) { it.innerHTML = "¡Excelente! Dominas la clasificación de residuos."; it.style.color = "var(--verde)"; bins.style.display = "none"; fb.textContent = ""; AudioEngine.play('complete'); return; }
+    it.style.color = "var(--teal-oscuro)"; it.textContent = wasteItems[gIdx].text; bins.style.display = "flex"; fb.textContent = "";
+  }
+  function checkBin(sel) {
+    const fb = document.getElementById("game-feedback"), it = document.getElementById("game-item-text");
+    if (sel === wasteItems[gIdx].bin) { fb.style.color = "var(--verde)"; fb.textContent = "¡Correcto!"; AudioEngine.play('check'); it.style.transform = "scale(0.9)"; setTimeout(() => { gIdx++; it.style.transform = "scale(1)"; updateGame1(); }, 650); }
+    else { fb.style.color = "var(--rojo)"; fb.textContent = "Esa no es. Intenta de nuevo."; AudioEngine.play('error'); it.style.animation = 'shake 0.4s'; setTimeout(() => it.style.animation = '', 400); if (navigator.vibrate) navigator.vibrate(150); }
+  }
+  document.querySelectorAll('[data-bin]').forEach(b => b.addEventListener('click', e => checkBin(e.target.dataset.bin)));
+
+  // ═══ JUEGO 2: PERMISOS ═══
+  const riskItems = [
+    { text: "Soldadura cerca a líneas de proceso", type: "permiso" },
+    { text: "Recorrido de inspección visual", type: "rutina" },
+    { text: "Ingreso a tanque o espacio confinado", type: "permiso" },
+    { text: "Trabajo en altura sobre plataforma", type: "permiso" },
+    { text: "Diligenciar un formato en oficina", type: "rutina" }
+  ];
+  let rIdx = 0;
+  function initGame2() { rIdx = 0; updateGame2(); }
+  function updateGame2() {
+    const it = document.getElementById("game2-item-text"), bins = document.getElementById("game2-bins"), fb = document.getElementById("game2-feedback");
+    if (!it) return;
+    if (rIdx >= riskItems.length) { it.innerHTML = "¡Perfecto! Sabes identificar los trabajos críticos."; it.style.color = "var(--verde)"; bins.style.display = "none"; fb.textContent = ""; AudioEngine.play('complete'); return; }
+    it.style.color = "var(--teal-oscuro)"; it.textContent = riskItems[rIdx].text; bins.style.display = "flex"; fb.textContent = "";
+  }
+  function checkRisk(sel) {
+    const fb = document.getElementById("game2-feedback"), it = document.getElementById("game2-item-text");
+    if (sel === riskItems[rIdx].type) { fb.style.color = "var(--verde)"; fb.textContent = "¡Bien clasificado!"; AudioEngine.play('check'); it.style.transform = "scale(0.9)"; setTimeout(() => { rIdx++; it.style.transform = "scale(1)"; updateGame2(); }, 650); }
+    else { fb.style.color = "var(--rojo)"; fb.textContent = "Cuidado. Revisa los conceptos."; AudioEngine.play('error'); it.style.animation = 'shake 0.4s'; setTimeout(() => it.style.animation = '', 400); if (navigator.vibrate) navigator.vibrate(150); }
+  }
+  document.querySelectorAll('[data-risk]').forEach(b => b.addEventListener('click', e => checkRisk(e.target.dataset.risk)));
+
+  document.querySelectorAll('details').forEach(d => { d.addEventListener('toggle', () => { if (d.open) AudioEngine.play('open'); }); });
+
+  function updateChecklist() {
+    if (!checklistSection) return;
+    const items = checklistSection.querySelectorAll('.check-item');
+    items.forEach((cb, idx) => { const li = document.getElementById('cli-' + idx); if (li) li.classList.toggle('checked-ok', cb.checked); });
+    const done = Array.from(items).filter(c => c.checked).length;
+    if (done === items.length) { const a = document.getElementById('mensaje-alerta'); if (a) a.innerHTML = ''; setTimeout(() => AudioEngine.play('complete'), 150); }
+  }
+  if (checklistSection) {
+    checklistSection.querySelectorAll('.check-item').forEach(cb => { cb.addEventListener('change', () => { if (cb.checked) AudioEngine.play('check'); updateChecklist(); }); });
+  }
 
   function show(index) {
-    sections.forEach((s, i) => {
-      s.classList.toggle("active", i === index);
-    });
-
-    btnAnterior.style.display = (index === 0) ? "none" : "inline-block";
-    btnSiguiente.style.display = (index === sections.length - 1) ? "none" : "inline-block";
-
-    const progreso = ((index + 1) / sections.length) * 100;
-    document.getElementById("barraProgreso").style.width = progreso + "%";
-
-    // Elimina advertencia si se retrocede
-    const advertencia = document.getElementById("advertencia-check");
-    if (advertencia) advertencia.remove();
+    sections.forEach((s, i) => { if (i === index) { s.classList.add('active'); s.removeAttribute('hidden'); } else { s.classList.remove('active'); s.setAttribute('hidden', ''); } });
+    btnAnterior.style.visibility = index === 0 ? 'hidden' : 'visible';
+    btnSiguiente.style.display = index === sections.length - 1 ? 'none' : 'inline-flex';
+    const pct = Math.round((index + 1) / sections.length * 100);
+    barraProgreso.style.width = pct + '%'; barraProgreso.setAttribute('aria-valuenow', pct);
+    progressPct.textContent = pct + '%'; progressPct.classList.add('visible');
+    clearTimeout(progressPct._timer); progressPct._timer = setTimeout(() => progressPct.classList.remove('visible'), 1500);
+    headerBadge.textContent = (index + 1) + ' / ' + sections.length;
+    headerSectionName.textContent = sections[index].dataset.title || '';
+    stepCounter.textContent = 'Sección ' + (index + 1) + ' de ' + sections.length;
+    document.querySelectorAll('.nav-dot').forEach((d, i) => { d.classList.toggle('active', i === index); d.classList.toggle('visited', visited.has(i) && i !== index); });
+    visited.add(index);
+    const title = sections[index].dataset.title || ('Sección ' + (index + 1));
+    liveAnnouncer.textContent = 'Sección ' + (index + 1) + ' de ' + sections.length + ': ' + title;
+    sections[index].setAttribute('tabindex', '-1');
+    setTimeout(() => sections[index].focus({ preventScroll: true }), 100);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (swipeHint && index > 0) swipeHint.style.display = 'none';
+    if (index === 6) initGame2();  // Tareas de Alto Riesgo
+    if (index === 7) initGame1();  // Gestión Ambiental
   }
 
-  function nextSection() {
-    // Verifica si estamos en la sección 13 (índice 12)
-if (sections[current].querySelector("h2")?.textContent?.includes("RECOMENDACIONES FINALES")) {
-
-      const checkboxes = sections[current].querySelectorAll('input[type="checkbox"]');
-      const todosMarcados = Array.from(checkboxes).every(cb => cb.checked);
-
-      if (!todosMarcados) {
-        if (!document.getElementById("advertencia-check")) {
-          const advertencia = document.createElement("p");
-          advertencia.id = "advertencia-check";
-          advertencia.textContent = "⚠️ Por favor marca todos los ítems antes de continuar.";
-          advertencia.style.color = "red";
-          advertencia.style.marginTop = "15px";
-          sections[current].appendChild(advertencia);
-        }
-        return; // No avanza
+  function checklistGate() {
+    if (sections[current] !== checklistSection) return true;
+    const checkboxes = checklistSection.querySelectorAll('.check-item');
+    const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+    if (!allChecked) {
+      const areaMensaje = document.getElementById('mensaje-alerta');
+      if (areaMensaje && !areaMensaje.querySelector('.advertencia-checklist')) {
+        areaMensaje.innerHTML = "<div class='advertencia-checklist'><svg class='lc-icon' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='width:17px;height:17px'><path d='m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z'/><line x1='12' x2='12' y1='9' y2='13'/><line x1='12' x2='12.01' y1='17' y2='17'/></svg> Por favor marca todos los ítems antes de continuar.</div>";
       }
+      return false;
     }
-
-    if (current < sections.length - 1) {
-      current++;
-      show(current);
-    }
+    const areaMensaje = document.getElementById('mensaje-alerta');
+    if (areaMensaje) areaMensaje.innerHTML = '';
+    return true;
   }
 
-  function prevSection() {
-    if (current > 0) {
-      current--;
-      show(current);
-    }
-  }
+  function goTo(index) { if (index === current) return; if (index > current && !checklistGate()) return; AudioEngine.play(index > current ? 'next' : 'prev'); current = index; show(current); }
+  function nextSection() { if (!checklistGate()) return; if (current < sections.length - 1) { AudioEngine.play('next'); current++; show(current); } }
+  function prevSection() { if (current > 0) { AudioEngine.play('prev'); current--; show(current); } }
 
-  document.addEventListener("DOMContentLoaded", () => show(current));
+  btnSiguiente.addEventListener('click', nextSection);
+  btnAnterior.addEventListener('click', prevSection);
+
+  document.addEventListener('keydown', e => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); nextSection(); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); prevSection(); }
+  });
+
+  let tsX = 0, tsY = 0, tsT = 0;
+  mainContainer.addEventListener('touchstart', e => { tsX = e.changedTouches[0].clientX; tsY = e.changedTouches[0].clientY; tsT = Date.now(); }, { passive: true });
+  mainContainer.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - tsX, dy = e.changedTouches[0].clientY - tsY, dt = Date.now() - tsT;
+    if (Math.abs(dx) > Math.abs(dy) * 1.5 && Math.abs(dx) > 50 && dt < 500) { if (dx < 0) nextSection(); else prevSection(); }
+  }, { passive: true });
+
+  show(0);
+  updateChecklist();
+  sections.forEach((s, i) => { if (i !== 0) s.setAttribute('hidden', ''); });
+})();
 </script>
+
 </body>
 </html>
